@@ -8,7 +8,11 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -21,14 +25,25 @@ import javafx.stage.Stage;
  */
 public class OthelloFXMLController implements Initializable {
 
-    //Controller
-    private Plateau physicOthellier;
-    private static AnchorPane rootLayout;
-    private OthelloFXMLController othelloFXMLController;
+    /* -------------------------------------------------------------------------
+    *                             VIEW MANAGEMENT  
+    * -------------------------------------------------------------------------- */
     
-    // Vue 
+    private static Image EMPTY_PICTURE;
+    private static Image WHITE_PICTURE;
+    private static Image BLACK_PICTURE;
+    
+    private static AnchorPane rootLayout;  
+    
     @FXML GridPane othellier;
-    ImageView[][] plateau;
+    
+    ImageView[][] imgPlateau;
+    
+    static {
+        EMPTY_PICTURE = new Image("ressources/empty.png");
+        WHITE_PICTURE = new Image("ressources/pion_blanc.png");
+        BLACK_PICTURE = new Image("ressources/pion_noir.png");
+    }
     
     /**
      * Initializes the controller class.
@@ -36,15 +51,24 @@ public class OthelloFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        plateau = new ImageView [8][8];
+        imgPlateau = new ImageView [8][8];
+        
         for(int i = 0 ; i< 8; i++){
+            
             for(int j = 0 ; j < 8; j++){
+                
                 ImageView image = new ImageView();
-                plateau[i][j] = image;
+                image.setFitHeight(30);
+                image.setFitWidth(30);
+                image.setImage(EMPTY_PICTURE);
+                
+                imgPlateau[i][j] = image;
                 othellier.add(image,i,j);
+                
+                GridPane.setValignment(image, VPos.CENTER);
+                GridPane.setHalignment(image, HPos.CENTER);
             }
         }
-        
         run();
     } 
     
@@ -67,6 +91,14 @@ public class OthelloFXMLController implements Initializable {
         }
     }
     
+    
+    
+    /* -------------------------------------------------------------------------
+    *                         GAME MANAGEMENT 
+    * -------------------------------------------------------------------------- */
+    
+    private Plateau physicOthellier;
+    
     /* Run the game <3 */
     public void run() {
         
@@ -78,7 +110,6 @@ public class OthelloFXMLController implements Initializable {
     
     private void initializeGame() {
         physicOthellier = new Plateau();
-        System.out.println("GAME ON !");
         //todo : new players 
     }
     
