@@ -1,5 +1,6 @@
 package apo_polyroll;
 
+import apo_polyroll.controller.OthelloFXMLController;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -19,34 +20,16 @@ import javafx.stage.Stage;
 public class APO_Polyroll extends Application {
     
     private Stage primaryStage;
-    private AnchorPane rootLayout;
     
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("PolyRoll");
 
-        initRootLayout();
+        OthelloFXMLController.initRootLayout(primaryStage);
     }
     
-     /**
-     * Initializes the root layout.
-     */
-    public void initRootLayout() {
-        try {
-            // Load root layout from fxml file.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(APO_Polyroll.class.getResource("view/OthelloFXML.fxml"));
-            rootLayout = (AnchorPane) loader.load();
-
-            // Show the scene containing the root layout.
-            Scene scene = new Scene(rootLayout);
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+     
 
     /**
      * Returns the main stage.
