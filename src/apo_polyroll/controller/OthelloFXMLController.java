@@ -2,6 +2,7 @@ package apo_polyroll.controller;
 
 import apo_polyroll.APO_Polyroll;
 import apo_polyroll.model.Plateau;
+import apo_polyroll.model.Plateau.Jeton;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,6 +34,7 @@ public class OthelloFXMLController implements Initializable {
     private static Image WHITE_PICTURE;
     private static Image BLACK_PICTURE;
     
+    public static final int IMG_SIZE = 69;
     private static AnchorPane rootLayout;  
     
     @FXML GridPane grdPothellier;
@@ -51,18 +53,18 @@ public class OthelloFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        imgPlateau = new ImageView [8][8];
+        imgPlateau = new ImageView [Plateau.PLATEAU_SIZE][Plateau.PLATEAU_SIZE];
         
         for(int i = 0 ; i< 8; i++){
             
             for(int j = 0 ; j < 8; j++){
                 
                 ImageView image = new ImageView();
-                image.setFitHeight(69);
-                image.setFitWidth(69);
+                image.setFitHeight(IMG_SIZE);
+                image.setFitWidth(IMG_SIZE);
                 image.setImage(EMPTY_PICTURE);
-                
                 imgPlateau[i][j] = image;
+                
                 grdPothellier.add(image,i,j);
                 
                 GridPane.setValignment(image, VPos.CENTER);
@@ -88,6 +90,29 @@ public class OthelloFXMLController implements Initializable {
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    
+    public void updateOthellier(Plateau physicOthellier) {
+        
+        for(int i = 0; i < Plateau.PLATEAU_SIZE; i++) {
+            
+            for(int j = 0; j < Plateau.PLATEAU_SIZE; j++) {
+                
+                Jeton newToken = physicOthellier.getToken(i, j);
+                switch (newToken) {
+                    case BLACK:
+                        //todo
+                        break;
+                        
+                    case WHITE:
+                        //todo
+                        break;
+                    
+                    default: 
+                        //Empty token : do nothing
+                }
+            }
         }
     }
     

@@ -8,8 +8,8 @@ public class Plateau {
     
     public enum Jeton {
         
-        BLANC, 
-        NOIR,
+        BLACK, 
+        WHITE,
         EMPTY
         
     }
@@ -31,10 +31,10 @@ public class Plateau {
             }
         }
         
-        setToken(Jeton.BLANC, 4, 4);
-        setToken(Jeton.BLANC, 5, 5);
-        setToken(Jeton.NOIR, 5, 4);
-        setToken(Jeton.NOIR, 4, 5);
+        setToken(Jeton.WHITE, 3, 3);
+        setToken(Jeton.WHITE, 4, 4);
+        setToken(Jeton.BLACK, 4, 3);
+        setToken(Jeton.BLACK, 3, 4);
     }
     
     public void setToken(Jeton value, int x, int y) {
