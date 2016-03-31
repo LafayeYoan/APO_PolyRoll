@@ -10,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
-import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -22,20 +21,16 @@ import javafx.stage.Stage;
 
 /**
  * FXML Controller class
- *
- * @author Darkos
+ * Manage the view JavaFX and the game 
+ * @author Yoan LAFAYE DE MICHEAUX - Sacha LHOPITAL
  */
 public class OthelloFXMLController implements Initializable {
-
-    /* -------------------------------------------------------------------------
-    *                             VIEW MANAGEMENT  
-    * -------------------------------------------------------------------------- */
     
+    public static final int IMG_SIZE = 69;
+
     private static Image EMPTY_PICTURE;
     private static Image WHITE_PICTURE;
     private static Image BLACK_PICTURE;
-    
-    public static final int IMG_SIZE = 69;
     private static AnchorPane rootLayout;  
     
     private Plateau physicOthellier;
@@ -43,6 +38,10 @@ public class OthelloFXMLController implements Initializable {
     @FXML GridPane grdPothellier;
     
     ImageView[][] imgPlateau;
+    
+    /* -------------------------------------------------------------------------
+    *                             VIEW MANAGEMENT  
+    * -------------------------------------------------------------------------- */
     
     static {
         EMPTY_PICTURE = new Image("ressources/empty.png");
@@ -74,7 +73,7 @@ public class OthelloFXMLController implements Initializable {
                 GridPane.setHalignment(image, HPos.CENTER);
             }
         }
-        run();
+        runTheGame(); 
     } 
     
     /**
@@ -96,14 +95,21 @@ public class OthelloFXMLController implements Initializable {
         }
     }
     
+    /***
+     * Update the view based on the physic othellier.
+     * Check every node of the Grid Pane (i.e : every square of the othellier)
+     * and replace the token if necessary.
+     */
     private void updateOthellier() {
+        
         for (Node node : grdPothellier.getChildren()) {
+            
             if(GridPane.getColumnIndex(node) == null){
+                //If null : the node is not a square
                 continue;
             }
-            int i = GridPane.getColumnIndex(node);
-            int j = GridPane.getRowIndex(node);
-            Jeton newToken = physicOthellier.getToken(i, j);
+            
+            Jeton newToken = physicOthellier.getToken(GridPane.getColumnIndex(node), GridPane.getRowIndex(node));
             switch (newToken) {
                 case BLACK:                        
                     ((ImageView)node).setImage(BLACK_PICTURE);
@@ -118,7 +124,6 @@ public class OthelloFXMLController implements Initializable {
                     //((ImageView)node).setImage(EMPTY_PICTURE);
             }
         }
-
     }
     
     
@@ -127,16 +132,20 @@ public class OthelloFXMLController implements Initializable {
     * -------------------------------------------------------------------------- */
     
 
-    
-    /* Run the game <3 */
-    public void run() {
+    /***
+     * Run the Game : 
+     * Initialize, update and manage the game
+     * (Manage the imgPlateau with the physicOthellier)
+     */
+    public void runTheGame() {
         
         initializeGame();
-        
-        //todo : run the game
-        
+        //todo : run the game !       
     }
     
+    /***
+     * Setup the othellier and players for the game
+     */
     private void initializeGame() {
         physicOthellier = new Plateau();
         updateOthellier();

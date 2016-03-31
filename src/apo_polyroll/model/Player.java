@@ -1,15 +1,35 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package apo_polyroll.model;
 
 /**
- *
- * @author p1504274
+ * Player class 
+ * @author Yoan LAFAYE DE MICHEAUX - Sacha LHOPITAL
  */
 public class Player {
+    
+    private String name;
+    private Plateau.Jeton token;
+    
+    public Player(String name, Plateau.Jeton token) {
+        this.name = name;
+        this.token = token;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Plateau.Jeton getToken() {
+        return token;
+    }
+
+    public void setToken(Plateau.Jeton token) {
+        this.token = token;
+    }
+    
+    
     
 }
