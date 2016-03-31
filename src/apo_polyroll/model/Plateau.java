@@ -1,7 +1,8 @@
 package apo_polyroll.model;
 
 /**
- *
+ * Plateau class
+ * Othellier for the game
  * @author Yoan LAFAYE DE MICHEAUX - Sacha LHOPITAL
  */
 public class Plateau {
@@ -11,7 +12,6 @@ public class Plateau {
         BLACK, 
         WHITE,
         EMPTY
-        
     }
     
     public static int PLATEAU_SIZE = 8;
@@ -19,7 +19,7 @@ public class Plateau {
     private Jeton[][] othellier;
 
     /***
-     * Construct and initialize le plateau
+     * Construct and initialize the "physic" othellier
      * Set Tokens to begin the game
      */
     public Plateau() {
