@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -36,6 +37,8 @@ public class OthelloFXMLController implements Initializable {
     
     public static final int IMG_SIZE = 69;
     private static AnchorPane rootLayout;  
+    
+    private Plateau physicOthellier;
     
     @FXML GridPane grdPothellier;
     
@@ -93,36 +96,37 @@ public class OthelloFXMLController implements Initializable {
         }
     }
     
-    public void updateOthellier(Plateau physicOthellier) {
-        
-        for(int i = 0; i < Plateau.PLATEAU_SIZE; i++) {
-            
-            for(int j = 0; j < Plateau.PLATEAU_SIZE; j++) {
-                
-                Jeton newToken = physicOthellier.getToken(i, j);
-                switch (newToken) {
-                    case BLACK:
-                        //todo
-                        break;
-                        
-                    case WHITE:
-                        //todo
-                        break;
-                    
-                    default: 
-                        //Empty token : do nothing
-                }
+    private void updateOthellier() {
+        for (Node node : grdPothellier.getChildren()) {
+            if(GridPane.getColumnIndex(node) == null){
+                continue;
+            }
+            int i = GridPane.getColumnIndex(node);
+            int j = GridPane.getRowIndex(node);
+            Jeton newToken = physicOthellier.getToken(i, j);
+            switch (newToken) {
+                case BLACK:                        
+                    ((ImageView)node).setImage(BLACK_PICTURE);
+                    break;
+
+                case WHITE:
+                    ((ImageView)node).setImage(WHITE_PICTURE);
+                    break;
+
+                default: 
+                    //Do nothing, token is already empty by default
+                    //((ImageView)node).setImage(EMPTY_PICTURE);
             }
         }
+
     }
-    
     
     
     /* -------------------------------------------------------------------------
     *                         GAME MANAGEMENT 
     * -------------------------------------------------------------------------- */
     
-    private Plateau physicOthellier;
+
     
     /* Run the game <3 */
     public void run() {
@@ -135,6 +139,7 @@ public class OthelloFXMLController implements Initializable {
     
     private void initializeGame() {
         physicOthellier = new Plateau();
+        updateOthellier();
         //todo : new players 
     }
     
