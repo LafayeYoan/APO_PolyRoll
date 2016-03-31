@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package apo_polyroll;
 
 import java.io.IOException;
@@ -19,7 +14,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Darkos
+ * @author Yoan LAFAYE DE MICHEAUX - Sacha LHOPITAL
  */
 public class APO_Polyroll extends Application {
     
