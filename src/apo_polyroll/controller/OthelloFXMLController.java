@@ -35,7 +35,7 @@ public class OthelloFXMLController implements Initializable {
     
     private static AnchorPane rootLayout;  
     
-    @FXML GridPane othellier;
+    @FXML GridPane grdPothellier;
     
     ImageView[][] imgPlateau;
     
@@ -58,12 +58,12 @@ public class OthelloFXMLController implements Initializable {
             for(int j = 0 ; j < 8; j++){
                 
                 ImageView image = new ImageView();
-                image.setFitHeight(30);
-                image.setFitWidth(30);
+                image.setFitHeight(69);
+                image.setFitWidth(69);
                 image.setImage(EMPTY_PICTURE);
                 
                 imgPlateau[i][j] = image;
-                othellier.add(image,i,j);
+                grdPothellier.add(image,i,j);
                 
                 GridPane.setValignment(image, VPos.CENTER);
                 GridPane.setHalignment(image, HPos.CENTER);
