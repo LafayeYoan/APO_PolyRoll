@@ -1,8 +1,11 @@
 package apo_polyroll.controller;
 
 import apo_polyroll.APO_Polyroll;
+import apo_polyroll.model.HumanPlayer;
+import apo_polyroll.model.IAPlayer;
 import apo_polyroll.model.Plateau;
 import apo_polyroll.model.Plateau.Jeton;
+import apo_polyroll.model.Player;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,6 +28,10 @@ import javafx.stage.Stage;
  * @author Yoan LAFAYE DE MICHEAUX - Sacha LHOPITAL
  */
 public class OthelloFXMLController implements Initializable {
+   
+    /* -------------------------------------------------------------------------
+    *                             VIEW MANAGEMENT  
+    * -------------------------------------------------------------------------- */
     
     public static final int IMG_SIZE = 69;
 
@@ -33,15 +40,9 @@ public class OthelloFXMLController implements Initializable {
     private static Image BLACK_PICTURE;
     private static AnchorPane rootLayout;  
     
-    private Plateau physicOthellier;
-    
     @FXML GridPane grdPothellier;
     
     ImageView[][] imgPlateau;
-    
-    /* -------------------------------------------------------------------------
-    *                             VIEW MANAGEMENT  
-    * -------------------------------------------------------------------------- */
     
     static {
         EMPTY_PICTURE = new Image("ressources/empty.png");
@@ -131,6 +132,10 @@ public class OthelloFXMLController implements Initializable {
     *                         GAME MANAGEMENT 
     * -------------------------------------------------------------------------- */
     
+    private Plateau physicOthellier;
+    private boolean endOfGame;
+    private Player player;
+    private Player computer;
 
     /***
      * Run the Game : 
@@ -140,16 +145,20 @@ public class OthelloFXMLController implements Initializable {
     public void runTheGame() {
         
         initializeGame();
-        //todo : run the game !       
+        
     }
     
     /***
      * Setup the othellier and players for the game
      */
     private void initializeGame() {
+        
+        endOfGame = false;
         physicOthellier = new Plateau();
+        player = new HumanPlayer();
+        computer = new IAPlayer();
+        
         updateOthellier();
-        //todo : new players 
     }
     
 }
