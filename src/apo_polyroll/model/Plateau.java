@@ -1,5 +1,7 @@
 package apo_polyroll.model;
 
+import apo_polyroll.utils.Position;
+
 /**
  * Plateau class
  * Othellier for the game
@@ -11,7 +13,21 @@ public class Plateau {
         
         BLACK, 
         WHITE,
-        EMPTY
+        EMPTY;
+
+        /***
+         * Get the reverse color of the token
+         * @return WHITE if the token is BLACK, BLACK if it is WHITE. EMPTY otherwise.
+         */
+        Jeton getReverse() {
+            if(this.equals(BLACK)) {
+                return WHITE;
+            }
+            if(this.equals(WHITE)) {
+                return BLACK;
+            }
+            return EMPTY;
+        }
     }
     
     public static int PLATEAU_SIZE = 8;
@@ -43,6 +59,91 @@ public class Plateau {
     
     public Jeton getToken(int x, int y) {
         return othellier[x][y];
+    }
+    
+    /***
+     * Return the position of the next token from an initial position and going up. 
+     * @param begin The initial position
+     * @param token The token we looking for
+     * @return the first position found in this direction of null if not found
+     */
+    public Position getNextToken_Up(Position begin, Jeton token) {
+        for(int i = begin.y; i < 0; i--) {
+            if(othellier[begin.x][i].equals(token)) {
+                return new Position(begin.x, i);
+            }
+        }
+        return null;
+    }
+    
+    /***
+     * Return the position of the next token from an initial position and going down. 
+     * @param begin The initial position
+     * @param token The token we looking for
+     * @return the first position found in this direction of null if not found
+     */
+    public Position getNextToken_Down(Position begin, Jeton token) {
+        return null;
+    }
+    
+    /***
+     * Return the position of the next token from an initial position and going left. 
+     * @param begin The initial position
+     * @param token The token we looking for
+     * @return the first position found in this direction of null if not found
+     */
+    public Position getNextToken_Left(Position begin, Jeton token) {
+        return null;
+    }
+    
+    /***
+     * Return the position of the next token from an initial position and going right. 
+     * @param begin The initial position
+     * @param token The token we looking for
+     * @return the first position found in this direction of null if not found
+     */
+    public Position getNextToken_Right(Position begin, Jeton token) {
+        return null;
+    }
+    
+    /***
+     * Return the position of the next token from an initial position and going diagonal Up Right. 
+     * @param begin The initial position
+     * @param token The token we looking for
+     * @return the first position found in this direction of null if not found
+     */
+    public Position getNextToken_DiagonalUpRight(Position begin, Jeton token) {
+        return null;
+    }
+    
+    /***
+     * Return the position of the next token from an initial position and going diagonal Up Left. 
+     * @param begin The initial position
+     * @param token The token we looking for
+     * @return the first position found in this direction of null if not found
+     */
+    public Position getNextToken_DiagonalUpLeft(Position begin, Jeton token) {
+        return null;
+    }
+    
+    /***
+     * Return the position of the next token from an initial position and going diagonal Down Right. 
+     * @param begin The initial position
+     * @param token The token we looking for
+     * @return the first position found in this direction of null if not found
+     */
+    public Position getNextToken_DiagonalDownRight(Position begin, Jeton token) {
+        return null;
+    }
+    
+    /***
+     * Return the position of the next token from an initial position and going diagonal Down Left. 
+     * @param begin The initial position
+     * @param token The token we looking for
+     * @return the first position found in this direction of null if not found
+     */
+    public Position getNextToken_DiagonalDownLeft(Position begin, Jeton token) {
+        return null;
     }
     
     /***

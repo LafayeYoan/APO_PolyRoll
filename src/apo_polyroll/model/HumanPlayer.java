@@ -1,5 +1,6 @@
 package apo_polyroll.model;
 
+import apo_polyroll.model.Plateau.Jeton;
 import static apo_polyroll.model.Plateau.PLATEAU_SIZE;
 import apo_polyroll.utils.Position;
 import java.util.ArrayList;
@@ -17,15 +18,30 @@ public class HumanPlayer extends Player {
 
     @Override
     public ArrayList<Position> getPlayableSpots(Plateau othellier) {
+        ArrayList<Position> allPositions = new ArrayList<Position>();
         for(int i = 0; i < PLATEAU_SIZE; i++) {
             for(int j = 0; j < PLATEAU_SIZE; j++) {
-                //Si 
-                if((othellier.getToken(i, j)).equals(this.getToken())) {
-                    
+                //Si le joueur possède un pion sur cette case 
+                if((othellier.getToken(i, j)).equals(getToken())) {
+                    //alors :
+                    // si il y a un token enemy adjacent (vérif les 8 directions) : 
+                    Position playerPosition = new Position(i, j);
+                    Position enemyPosition = othellier.getNextToken_Up(playerPosition, getToken().getReverse());
+                    if(enemyPosition == null) {
+                        //no enemy token found
+                    } else {
+                        //enemy token found : trouver la prochaine case vide dans la même direction
+                        Position playablePosition = othellier.getNextToken_Up(enemyPosition, Jeton.EMPTY);
+                        if(playablePosition == null) {
+                            //do nothing
+                        } else {
+                            allPositions.add(playablePosition);
+                        }
+                    }                    
                 }
             }
         }
-        return null;
+        return allPositions;
     }
     
 }
