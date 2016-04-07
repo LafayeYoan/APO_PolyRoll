@@ -145,11 +145,11 @@ public class OthelloFXMLController implements Initializable {
         
         initializeGame();
         
-        while(! physicOthellier.isFull()) {
+        /*while(! physicOthellier.isFull()) {
             
             //todo
             
-        }
+        }*/
         
     }
     
