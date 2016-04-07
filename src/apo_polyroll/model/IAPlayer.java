@@ -1,5 +1,8 @@
 package apo_polyroll.model;
 
+import apo_polyroll.utils.Position;
+import java.util.ArrayList;
+
 /**
  * IA Player
  * JETON BLANC
@@ -9,6 +12,11 @@ public class IAPlayer extends Player {
 
     public IAPlayer() {
         super("Ordinateur", Plateau.Jeton.WHITE);
+    }
+
+    @Override
+    public ArrayList<Position> getPlayableSpots(Plateau othellier) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
