@@ -8,7 +8,11 @@ import apo_polyroll.model.Plateau.Jeton;
 import apo_polyroll.model.Player;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,6 +22,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -72,6 +77,24 @@ public class OthelloFXMLController implements Initializable {
                 
                 GridPane.setValignment(image, VPos.CENTER);
                 GridPane.setHalignment(image, HPos.CENTER);
+                
+                //add eventListener
+                image.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+                    @Override
+                    public void handle(MouseEvent event) {
+                        Object sourceObject = event.getSource();
+                        if(!sourceObject.getClass().equals(ImageView.class)){
+                            return;
+                        }
+                        ImageView spot = (ImageView)sourceObject;
+                        //spot position
+                        int x = GridPane.getColumnIndex(spot);
+                        int y = GridPane.getRowIndex(spot);
+                        System.out.println("Le jeton x:"+x+" y:"+y+" a été clické");
+                    }
+
+                });
             }
         }
         runTheGame(); 
@@ -127,12 +150,33 @@ public class OthelloFXMLController implements Initializable {
         }
     }
     
+    /***
+     * Uptate the listener
+     * 
+     */
+    private void updateListenner() {
+        ArrayList <apo_polyroll.utils.Position> playableSpot = player.getPlayableSpots(physicOthellier);
+        for (Node node : grdPothellier.getChildren()) {
+            
+            if(GridPane.getColumnIndex(node) == null){
+                //If null : the node is not a square
+                continue;
+            }
+            
+            ImageView spot = (ImageView)node;
+            //remove all listenner
+            
+            //spot.removeEventHandler(EventType.ROOT, spot.get);
+            
+        }
+    }
     
     /* -------------------------------------------------------------------------
     *                         GAME MANAGEMENT 
     * -------------------------------------------------------------------------- */
     
     private Plateau physicOthellier;
+    private ArrayList <apo_polyroll.utils.Position> playableSpot;
     private Player player;
     private Player computer;
 
