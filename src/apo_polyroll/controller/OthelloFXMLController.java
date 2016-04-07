@@ -102,7 +102,14 @@ public class OthelloFXMLController implements Initializable {
                         }
                         System.out.println("Le jeton x:"+x+" y:"+y+" a été clické, mise a jour du plateau");
                         
+                        //Mise a jour du plateau
+                        //physicOthellier.addToken(p,player.getToken());
                         
+                        
+                        //Position jeuIA = computer.getChoice();
+                        //physicOthellier.addToken(jeuIA,computer.getToken());
+                        playableSpot = player.getPlayableSpots(physicOthellier);
+                        updateOthellier();
                         
                         
                     }
