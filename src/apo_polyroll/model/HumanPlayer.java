@@ -43,12 +43,25 @@ public class HumanPlayer extends Player {
     private ArrayList<Position> findAllPossibilities(Plateau othellier, int x, int y) {
 
         ArrayList<Position> allPositions = new ArrayList<Position>();
+        ArrayList<Position> allPositionsUnclean = new ArrayList<Position>();
+        
         Position position = new Position(x, y);
         
-        if(getSpotIfExist(othellier, position, 0, -1) == null) {
-            //do nothing
-        } else {
-            allPositions.add(getSpotIfExist(othellier, position, 0, -1));
+        allPositionsUnclean.add(getSpotIfExist(othellier, position, 0, -1));
+        allPositionsUnclean.add(getSpotIfExist(othellier, position, 0, 1));
+        allPositionsUnclean.add(getSpotIfExist(othellier, position, -1, 0));
+        allPositionsUnclean.add(getSpotIfExist(othellier, position, 1, 0));
+        allPositionsUnclean.add(getSpotIfExist(othellier, position, 1, -1));
+        allPositionsUnclean.add(getSpotIfExist(othellier, position, -1, -1));
+        allPositionsUnclean.add(getSpotIfExist(othellier, position, 1, 1));
+        allPositionsUnclean.add(getSpotIfExist(othellier, position, -1, 1));
+        
+        for(Position pos : allPositionsUnclean) {
+            if(pos == null) {
+                //do nothing
+            } else {
+                allPositions.add(pos);
+            }
         }
         
         return allPositions;
