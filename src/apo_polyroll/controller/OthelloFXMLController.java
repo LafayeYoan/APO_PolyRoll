@@ -6,6 +6,7 @@ import apo_polyroll.model.IAPlayer;
 import apo_polyroll.model.Plateau;
 import apo_polyroll.model.Plateau.Jeton;
 import apo_polyroll.model.Player;
+import apo_polyroll.utils.Position;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public class OthelloFXMLController implements Initializable {
     private static Image EMPTY_PICTURE;
     private static Image WHITE_PICTURE;
     private static Image BLACK_PICTURE;
+    private static Image PLAYABLE_PICTURE;
     private static AnchorPane rootLayout;  
     
     @FXML GridPane grdPothellier;
@@ -53,6 +55,7 @@ public class OthelloFXMLController implements Initializable {
         EMPTY_PICTURE = new Image("ressources/empty.png");
         WHITE_PICTURE = new Image("ressources/pion_blanc.png");
         BLACK_PICTURE = new Image("ressources/pion_noir.png");
+        PLAYABLE_PICTURE = new Image("ressources/pion_jouable.png");
     }
     
     /**
@@ -91,7 +94,17 @@ public class OthelloFXMLController implements Initializable {
                         //spot position
                         int x = GridPane.getColumnIndex(spot);
                         int y = GridPane.getRowIndex(spot);
-                        System.out.println("Le jeton x:"+x+" y:"+y+" a été clické");
+                        
+                        Position p = new Position(x,y);
+                        if(!playableSpot.contains(p)){
+                            System.out.println("Le jeton x:"+x+" y:"+y+" a été clické, mais n'est pas jouable");
+                            return;
+                        }
+                        System.out.println("Le jeton x:"+x+" y:"+y+" a été clické, mise a jour du plateau");
+                        
+                        
+                        
+                        
                     }
 
                 });
@@ -133,7 +146,9 @@ public class OthelloFXMLController implements Initializable {
                 continue;
             }
             
-            Jeton newToken = physicOthellier.getToken(GridPane.getColumnIndex(node), GridPane.getRowIndex(node));
+            int x = GridPane.getColumnIndex(node);
+            int y = GridPane.getRowIndex(node);
+            Jeton newToken = physicOthellier.getToken(x,y);
             switch (newToken) {
                 case BLACK:                        
                     ((ImageView)node).setImage(BLACK_PICTURE);
@@ -146,6 +161,10 @@ public class OthelloFXMLController implements Initializable {
                 default: 
                     //Do nothing, token is already empty by default
                     //((ImageView)node).setImage(EMPTY_PICTURE);
+            }
+            Position p = new Position (x,y);
+            if(playableSpot.contains(p)){
+                ((ImageView)node).setImage(PLAYABLE_PICTURE);
             }
         }
     }
@@ -199,6 +218,10 @@ public class OthelloFXMLController implements Initializable {
         physicOthellier = new Plateau();
         player = new HumanPlayer();
         computer = new IAPlayer();
+        
+        playableSpot = player.getPlayableSpots(physicOthellier);
+        //init for test only
+        playableSpot.add(new Position(4,2));
         
         updateOthellier();
     }
