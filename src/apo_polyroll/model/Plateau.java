@@ -16,7 +16,7 @@ public class Plateau {
     
     public static int PLATEAU_SIZE = 8;
     
-    private Jeton[][] othellier;
+    public Jeton[][] othellier;
 
     /***
      * Construct and initialize the "physic" othellier
