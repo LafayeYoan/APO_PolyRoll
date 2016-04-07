@@ -1,7 +1,9 @@
 package apo_polyroll.model;
 
+import static apo_polyroll.model.Plateau.PLATEAU_SIZE;
 import apo_polyroll.utils.Position;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * IA Player
@@ -14,13 +16,69 @@ public class IAPlayer extends Player {
         super("Ordinateur", Plateau.Jeton.WHITE);
     }
     
+    /***
+     * Final position chosen by the IA 
+     * @param othelier the board
+     * @return the position to put a token
+     */
     public Position getChoice(Plateau othelier){
         return null;
     }
 
-    @Override
-    public ArrayList<Position> getPlayableSpots(Plateau othellier) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    /***
+     * Get all playable positions on the othellier for the IA. All position have an associate value. 
+     * The bigger is the value associate, the better is the move for the IA
+     * @param othellier the board
+     * @return an Map of all positions with a value
+     */
+    public HashMap<Position, Integer> getPlayableSpots(Plateau othellier) {
+        
+        HashMap allPositions = new HashMap<Position, Integer>();
+        
+        for(int i = 0; i < PLATEAU_SIZE; i++) {
+            for(int j = 0; j < PLATEAU_SIZE; j++) {
+                
+                //Si l'IA possède un pion sur cette case 
+                if((othellier.getToken(i, j)).equals(getToken())) {
+                    
+                    allPositions.putAll(findAllPossibilities(othellier, i, j)); 
+                }
+            }
+        }
+        return allPositions;
     }
-    
+
+    /***
+     * find all spots possible for a position given 
+     * @param x 
+     * @param y
+     * @return a list of all Positions possible for the IA with a value
+     */
+    private HashMap<Position, Integer> findAllPossibilities(Plateau othellier, int x, int y) {
+
+        HashMap allPositions = new HashMap<Position, Integer>();
+        ArrayList<Position> allPositionsUnclean = new ArrayList<Position>();
+        
+        Position position = new Position(x, y);
+        
+        allPositionsUnclean.add(getSpotIfExist(othellier, position, 0, -1));
+        allPositionsUnclean.add(getSpotIfExist(othellier, position, 0, 1));
+        allPositionsUnclean.add(getSpotIfExist(othellier, position, -1, 0));
+        allPositionsUnclean.add(getSpotIfExist(othellier, position, 1, 0));
+        allPositionsUnclean.add(getSpotIfExist(othellier, position, 1, -1));
+        allPositionsUnclean.add(getSpotIfExist(othellier, position, -1, -1));
+        allPositionsUnclean.add(getSpotIfExist(othellier, position, 1, 1));
+        allPositionsUnclean.add(getSpotIfExist(othellier, position, -1, 1));
+        
+        for(Position pos : allPositionsUnclean) {
+            if(pos == null) {
+                //do nothing
+            } else {
+                int value = othellier.getNumberReversedToken(pos);
+                allPositions.put(pos, value);
+            }
+        }
+        
+        return allPositions;
+    }
 }

@@ -166,8 +166,7 @@ public class OthelloFXMLController implements Initializable {
                     break;
 
                 default: 
-                    //Do nothing, token is already empty by default
-                    //((ImageView)node).setImage(EMPTY_PICTURE);
+                    ((ImageView)node).setImage(EMPTY_PICTURE);
             }
             Position p = new Position (x,y);
             if(playableSpot.contains(p)){

@@ -16,7 +16,11 @@ public class HumanPlayer extends Player {
         super("Joueur", Plateau.Jeton.BLACK);
     }
 
-    @Override
+    /***
+     * Get all playable positions on the othellier for the current player
+     * @param othellier the board
+     * @return an arrayList of all Positions
+     */
     public ArrayList<Position> getPlayableSpots(Plateau othellier) {
         
         ArrayList<Position> allPositions = new ArrayList<Position>();
@@ -65,39 +69,5 @@ public class HumanPlayer extends Player {
         }
         
         return allPositions;
-    }
-    
-    /***
-     * Get a playable spot if exist in a precise direction. 
-     * @param othellier the board
-     * @param initPos the initial position for checking
-     * @param index_X vector x
-     * @param index_Y vector y
-     * @return a position if exist. Null otherwise
-     */
-    private Position getSpotIfExist(Plateau othellier, Position initPos, int index_X, int index_Y) {
-        
-        Jeton adjacentToken = othellier.getToken(initPos.x + index_X, initPos.y + index_Y);
-        
-        if(adjacentToken.equals(getToken().getReverse())) {
-        
-            while((! adjacentToken.equals(Jeton.EMPTY))) {
-
-                initPos = new Position(initPos.x + index_X, initPos.y + index_Y);
-                adjacentToken = othellier.getNextToken(initPos, index_X, index_Y);
-
-                if(adjacentToken == null) {
-                    break;
-                }
-            }
-            
-            if(adjacentToken == null) {
-                //do nothing
-            } else {
-                //on peut jouer ici :
-                return new Position(initPos.x + index_X, initPos.y + index_Y);
-            }    
-        }
-        return null;
     }
 }

@@ -34,9 +34,36 @@ public abstract class Player {
     }
     
     /***
-     * Get all playable positions on the othellier for the current player
+     * Get a playable spot if exist in a precise direction. 
      * @param othellier the board
-     * @return an arrayList of all Positions
+     * @param initPos the initial position for checking
+     * @param index_X vector x
+     * @param index_Y vector y
+     * @return a position if exist. Null otherwise
      */
-    public abstract ArrayList<Position> getPlayableSpots(Plateau othellier);
+    protected Position getSpotIfExist(Plateau othellier, Position initPos, int index_X, int index_Y) {
+        
+        Plateau.Jeton adjacentToken = othellier.getToken(initPos.x + index_X, initPos.y + index_Y);
+        
+        if(adjacentToken.equals(token.getReverse())) {
+        
+            while((! adjacentToken.equals(Plateau.Jeton.EMPTY))) {
+
+                initPos = new Position(initPos.x + index_X, initPos.y + index_Y);
+                adjacentToken = othellier.getNextToken(initPos, index_X, index_Y);
+
+                if(adjacentToken == null) {
+                    break;
+                }
+            }
+            
+            if(adjacentToken == null) {
+                //do nothing
+            } else {
+                //on peut jouer ici :
+                return new Position(initPos.x + index_X, initPos.y + index_Y);
+            }    
+        }
+        return null;
+    }
 }

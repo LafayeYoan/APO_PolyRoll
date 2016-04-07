@@ -80,6 +80,17 @@ public class Plateau {
     }
     
     /***
+    * Count the number of reversed token if the IA play at a selected position
+    * @param pos the position selected
+    * @return a the number of reversed token
+    */
+    public int getNumberReversedToken(Position pos) {
+        //todo !
+        return 0;
+    }
+    
+    
+    /***
      * Check if the othellier is full (i.e if the game is ending)
      * @return true if the othellier is full. False otherwise.
      */
