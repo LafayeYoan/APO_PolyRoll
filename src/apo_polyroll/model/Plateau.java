@@ -62,18 +62,15 @@ public class Plateau {
     }
     
     /***
-     * Return the position of the next token from an initial position and going up. 
+     * Return the token above an initial position. 
      * @param begin The initial position
-     * @param token The token we looking for
-     * @return the first position found in this direction of null if not found
+     * @return the token found in this direction
      */
-    public Position getNextToken_Up(Position begin, Jeton token) {
-        for(int i = begin.y; i < 0; i--) {
-            if(othellier[begin.x][i].equals(token)) {
-                return new Position(begin.x, i);
-            }
+    public Jeton getNextToken_Up(Position begin) {
+        if(begin.y-- < 0) {
+            return null;
         }
-        return null;
+        return othellier[begin.x][begin.y--];
     }
     
     /***

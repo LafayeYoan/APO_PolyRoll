@@ -25,23 +25,31 @@ public class HumanPlayer extends Player {
                 if((othellier.getToken(i, j)).equals(getToken())) {
                     //alors :
                     // si il y a un token enemy adjacent (vérif les 8 directions) : 
-                    Position playerPosition = new Position(i, j);
-                    Position enemyPosition = othellier.getNextToken_Up(playerPosition, getToken().getReverse());
-                    if(enemyPosition == null) {
-                        //no enemy token found
-                    } else {
-                        //enemy token found : trouver la prochaine case vide dans la même direction
-                        Position playablePosition = othellier.getNextToken_Up(enemyPosition, Jeton.EMPTY);
-                        if(playablePosition == null) {
+                    Position position = new Position(i, j);
+                    Jeton upToken = othellier.getNextToken_Up(position);
+                    if(upToken.equals(getToken().getReverse())) {
+                        //enemy Token Found :
+                        while((! upToken.equals(Jeton.EMPTY))) {
+                            
+                            position = new Position(i, j--);
+                            upToken = othellier.getNextToken_Up(position);
+                            
+                            if(upToken == null) {
+                                break;
+                            }
+                        }
+                        
+                        if(upToken == null) {
                             //do nothing
                         } else {
-                            allPositions.add(playablePosition);
-                        }
-                    }                    
+                            //on peut jouer ici :
+                            position = new Position(i, j--);
+                            allPositions.add(position);
+                        }           
+                    } 
                 }
             }
         }
         return allPositions;
     }
-    
 }
