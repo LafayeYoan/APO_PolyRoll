@@ -220,8 +220,6 @@ public class OthelloFXMLController implements Initializable {
         computer = new IAPlayer();
         
         playableSpot = player.getPlayableSpots(physicOthellier);
-        //init for test only
-        playableSpot.add(new Position(4,2));
         
         updateOthellier();
     }
