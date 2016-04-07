@@ -76,7 +76,28 @@ public class Plateau {
     }
     
     public void addAndReverse(Position target, Jeton token) {
-        //todo
+        
+        //reverse in all directions
+        reverse(target, 0, -1, token);
+        reverse(target, 0, 1, token);
+        reverse(target, -1, 0, token);
+        reverse(target, 1, 0, token);
+        reverse(target, 1, -1, token);
+        reverse(target, -1, -1, token);
+        reverse(target, 1, 1, token);
+        reverse(target, -1, 1, token);
+    }
+    
+    private void reverse(Position init, int vectorX, int vectorY, Jeton token){
+        if(getToken(init.x+vectorX,init.y+vectorY) == Jeton.EMPTY)
+        {
+            return;
+        }
+        Position actualPos = init;
+        while(getToken(actualPos.x,actualPos.y) != token){
+            setToken(token,actualPos.x,actualPos.y);
+            actualPos = new Position(actualPos.x +vectorX ,actualPos.y + vectorY);
+        }
     }
     
     /***
