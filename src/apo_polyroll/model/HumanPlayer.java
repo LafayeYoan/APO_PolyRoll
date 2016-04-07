@@ -31,7 +31,7 @@ public class HumanPlayer extends Player {
                         //enemy Token Found :
                         while((! upToken.equals(Jeton.EMPTY))) {
                             
-                            position = new Position(i, j--);
+                            position = new Position(position.x, position.y - 1);
                             upToken = othellier.getNextToken_Up(position);
                             
                             if(upToken == null) {
@@ -43,9 +43,9 @@ public class HumanPlayer extends Player {
                             //do nothing
                         } else {
                             //on peut jouer ici :
-                            position = new Position(i, j--);
+                            position = new Position(position.x, position.y - 1);
                             allPositions.add(position);
-                        }           
+                        }      
                     } 
                 }
             }
