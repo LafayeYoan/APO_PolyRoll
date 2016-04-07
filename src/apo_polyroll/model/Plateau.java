@@ -67,10 +67,10 @@ public class Plateau {
      * @return the token found in this direction
      */
     public Jeton getNextToken_Up(Position begin) {
-        if(begin.y-- < 0) {
+        if(begin.y - 1 < 0) {
             return null;
         }
-        return othellier[begin.x][begin.y--];
+        return othellier[begin.x][begin.y - 1];
     }
     
     /***
