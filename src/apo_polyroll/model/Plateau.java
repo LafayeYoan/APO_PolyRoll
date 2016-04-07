@@ -45,4 +45,19 @@ public class Plateau {
         return othellier[x][y];
     }
     
+    /***
+     * Check if the othellier is full (i.e if the game is ending)
+     * @return true if the othellier is full. False otherwise.
+     */
+    public boolean isFull() {
+        for(int i = 0; i < PLATEAU_SIZE; i++) {
+            for(int j = 0; j < PLATEAU_SIZE; j++) {
+                if(othellier[i][j].equals(Jeton.EMPTY)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
 }

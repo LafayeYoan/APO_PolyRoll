@@ -133,7 +133,6 @@ public class OthelloFXMLController implements Initializable {
     * -------------------------------------------------------------------------- */
     
     private Plateau physicOthellier;
-    private boolean endOfGame;
     private Player player;
     private Player computer;
 
@@ -146,6 +145,12 @@ public class OthelloFXMLController implements Initializable {
         
         initializeGame();
         
+        while(! physicOthellier.isFull()) {
+            
+            //todo
+            
+        }
+        
     }
     
     /***
@@ -153,7 +158,6 @@ public class OthelloFXMLController implements Initializable {
      */
     private void initializeGame() {
         
-        endOfGame = false;
         physicOthellier = new Plateau();
         player = new HumanPlayer();
         computer = new IAPlayer();
