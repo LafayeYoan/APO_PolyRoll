@@ -106,8 +106,8 @@ public class OthelloFXMLController implements Initializable {
                         physicOthellier.addAndReverse(p,player.getToken());
                         
                         //IA game
-                        //Position jeuIA = computer.getChoice(physicOthellier);
-                        //physicOthellier.addAndReverse(jeuIA,computer.getToken());
+                        Position jeuIA = computer.getChoice(physicOthellier);
+                        physicOthellier.addAndReverse(jeuIA,computer.getToken());
                         playableSpot = player.getPlayableSpots(physicOthellier);
                         updateOthellier();
                         

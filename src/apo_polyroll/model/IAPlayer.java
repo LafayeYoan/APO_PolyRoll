@@ -18,11 +18,21 @@ public class IAPlayer extends Player {
     
     /***
      * Final position chosen by the IA 
-     * @param othelier the board
+     * @param othellier the board
      * @return the position to put a token
      */
-    public Position getChoice(Plateau othelier){
-        return null;
+    public Position getChoice(Plateau othellier){
+        
+        HashMap<Position, Integer> playableSpots = getPlayableSpots(othellier);
+        HashMap.Entry<Position, Integer> finalposition = null;
+
+        for (HashMap.Entry<Position, Integer> entry : playableSpots.entrySet()) {
+            
+            if (finalposition == null || entry.getValue().compareTo(finalposition.getValue()) > 0) {
+                finalposition = entry;
+            }
+        }
+        return finalposition.getKey();
     }
 
     /***
