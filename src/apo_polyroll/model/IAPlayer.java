@@ -13,6 +13,10 @@ public class IAPlayer extends Player {
     public IAPlayer() {
         super("Ordinateur", Plateau.Jeton.WHITE);
     }
+    
+    public Position getChoice(Plateau othelier){
+        return null;
+    }
 
     @Override
     public ArrayList<Position> getPlayableSpots(Plateau othellier) {

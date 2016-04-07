@@ -103,11 +103,11 @@ public class OthelloFXMLController implements Initializable {
                         System.out.println("Le jeton x:"+x+" y:"+y+" a été clické, mise a jour du plateau");
                         
                         //Mise a jour du plateau
-                        //physicOthellier.addToken(p,player.getToken());
+                        physicOthellier.addAndReverse(p,player.getToken());
                         
-                        
-                        //Position jeuIA = computer.getChoice();
-                        //physicOthellier.addToken(jeuIA,computer.getToken());
+                        //IA game
+                        Position jeuIA = computer.getChoice(physicOthellier);
+                        physicOthellier.addAndReverse(jeuIA,computer.getToken());
                         playableSpot = player.getPlayableSpots(physicOthellier);
                         updateOthellier();
                         
@@ -203,8 +203,8 @@ public class OthelloFXMLController implements Initializable {
     
     private Plateau physicOthellier;
     private ArrayList <apo_polyroll.utils.Position> playableSpot;
-    private Player player;
-    private Player computer;
+    private HumanPlayer player;
+    private IAPlayer computer;
 
     /***
      * Run the Game : 
