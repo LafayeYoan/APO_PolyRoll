@@ -62,85 +62,21 @@ public class Plateau {
     }
     
     /***
-     * Return the token above an initial position. 
+     * Return the token in a special direction from an initial position. 
      * @param begin The initial position
+     * @param index_X vector x
+     * @param index_Y vector y
      * @return the token found in this direction
      */
-    public Jeton getNextToken_Up(Position begin) {
-        if(begin.y - 1 < 0) {
+    public Jeton getNextToken(Position begin, int index_X, int index_Y) {
+        if(begin.y + index_Y < 0 || begin.x + index_X < 0) {
             return null;
         }
-        return othellier[begin.x][begin.y - 1];
+        return othellier[begin.x + index_X][begin.y + index_Y];
     }
     
-    /***
-     * Return the position of the next token from an initial position and going down. 
-     * @param begin The initial position
-     * @param token The token we looking for
-     * @return the first position found in this direction of null if not found
-     */
-    public Position getNextToken_Down(Position begin, Jeton token) {
-        return null;
-    }
-    
-    /***
-     * Return the position of the next token from an initial position and going left. 
-     * @param begin The initial position
-     * @param token The token we looking for
-     * @return the first position found in this direction of null if not found
-     */
-    public Position getNextToken_Left(Position begin, Jeton token) {
-        return null;
-    }
-    
-    /***
-     * Return the position of the next token from an initial position and going right. 
-     * @param begin The initial position
-     * @param token The token we looking for
-     * @return the first position found in this direction of null if not found
-     */
-    public Position getNextToken_Right(Position begin, Jeton token) {
-        return null;
-    }
-    
-    /***
-     * Return the position of the next token from an initial position and going diagonal Up Right. 
-     * @param begin The initial position
-     * @param token The token we looking for
-     * @return the first position found in this direction of null if not found
-     */
-    public Position getNextToken_DiagonalUpRight(Position begin, Jeton token) {
-        return null;
-    }
-    
-    /***
-     * Return the position of the next token from an initial position and going diagonal Up Left. 
-     * @param begin The initial position
-     * @param token The token we looking for
-     * @return the first position found in this direction of null if not found
-     */
-    public Position getNextToken_DiagonalUpLeft(Position begin, Jeton token) {
-        return null;
-    }
-    
-    /***
-     * Return the position of the next token from an initial position and going diagonal Down Right. 
-     * @param begin The initial position
-     * @param token The token we looking for
-     * @return the first position found in this direction of null if not found
-     */
-    public Position getNextToken_DiagonalDownRight(Position begin, Jeton token) {
-        return null;
-    }
-    
-    /***
-     * Return the position of the next token from an initial position and going diagonal Down Left. 
-     * @param begin The initial position
-     * @param token The token we looking for
-     * @return the first position found in this direction of null if not found
-     */
-    public Position getNextToken_DiagonalDownLeft(Position begin, Jeton token) {
-        return null;
+    public void addAndReverse(Position target, Jeton token) {
+        //todo
     }
     
     /***

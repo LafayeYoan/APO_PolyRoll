@@ -18,38 +18,73 @@ public class HumanPlayer extends Player {
 
     @Override
     public ArrayList<Position> getPlayableSpots(Plateau othellier) {
+        
         ArrayList<Position> allPositions = new ArrayList<Position>();
+        
         for(int i = 0; i < PLATEAU_SIZE; i++) {
             for(int j = 0; j < PLATEAU_SIZE; j++) {
+                
                 //Si le joueur possède un pion sur cette case 
                 if((othellier.getToken(i, j)).equals(getToken())) {
-                    //alors :
-                    // si il y a un token enemy adjacent (vérif les 8 directions) : 
-                    Position position = new Position(i, j);
-                    Jeton upToken = othellier.getNextToken_Up(position);
-                    if(upToken.equals(getToken().getReverse())) {
-                        //enemy Token Found :
-                        while((! upToken.equals(Jeton.EMPTY))) {
-                            
-                            position = new Position(position.x, position.y - 1);
-                            upToken = othellier.getNextToken_Up(position);
-                            
-                            if(upToken == null) {
-                                break;
-                            }
-                        }
-                        
-                        if(upToken == null) {
-                            //do nothing
-                        } else {
-                            //on peut jouer ici :
-                            position = new Position(position.x, position.y - 1);
-                            allPositions.add(position);
-                        }      
-                    } 
+                    
+                    allPositions.addAll(findAllPossibilities(othellier, i, j)); 
                 }
             }
         }
         return allPositions;
+    }
+
+    /***
+     * find all spots possible for a position given 
+     * @param x 
+     * @param y
+     * @return a list of all Positions possible for the player
+     */
+    private ArrayList<Position> findAllPossibilities(Plateau othellier, int x, int y) {
+
+        ArrayList<Position> allPositions = new ArrayList<Position>();
+        Position position = new Position(x, y);
+        
+        if(getSpotIfExist(othellier, position, 0, -1) == null) {
+            //do nothing
+        } else {
+            allPositions.add(getSpotIfExist(othellier, position, 0, -1));
+        }
+        
+        return allPositions;
+    }
+    
+    /***
+     * Get a playable spot if exist in a precise direction. 
+     * @param othellier the board
+     * @param initPos the initial position for checking
+     * @param index_X vector x
+     * @param index_Y vector y
+     * @return a position if exist. Null otherwise
+     */
+    private Position getSpotIfExist(Plateau othellier, Position initPos, int index_X, int index_Y) {
+        
+        Jeton adjacentToken = othellier.getToken(initPos.x + index_X, initPos.y + index_Y);
+        
+        if(adjacentToken.equals(getToken().getReverse())) {
+        
+            while((! adjacentToken.equals(Jeton.EMPTY))) {
+
+                initPos = new Position(initPos.x + index_X, initPos.y + index_Y);
+                adjacentToken = othellier.getNextToken(initPos, index_X, index_Y);
+
+                if(adjacentToken == null) {
+                    break;
+                }
+            }
+            
+            if(adjacentToken == null) {
+                //do nothing
+            } else {
+                //on peut jouer ici :
+                return new Position(initPos.x + index_X, initPos.y + index_Y);
+            }    
+        }
+        return null;
     }
 }
