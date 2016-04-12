@@ -58,6 +58,9 @@ public class Plateau {
     }
     
     public Jeton getToken(int x, int y) {
+        if(isOutOfBounds(x, y)) {
+            return null;
+        }
         return othellier[x][y];
     }
     
@@ -69,10 +72,7 @@ public class Plateau {
      * @return the token found in this direction
      */
     public Jeton getNextToken(Position begin, int index_X, int index_Y) {
-        if(begin.y + index_Y < 0 || begin.x + index_X < 0) {
-            return null;
-        }
-        return othellier[begin.x + index_X][begin.y + index_Y];
+        return getToken(begin.x + index_X, begin.y + index_Y);
     }
     
     public void addAndReverse(Position target, Jeton token) {
@@ -88,27 +88,22 @@ public class Plateau {
         reverse(target, -1, 1, token);
     }
     
-    private void reverse(Position init, int vectorX, int vectorY, Jeton token){
+    private void reverse(Position init, int vectorX, int vectorY, Jeton tokenPlayer){
         
-        //Vérifie si on ne sort pas du tableau (pos initial ou pos à reverse
-        //Vérifie si la case à reverse n'est pas vide
-        if(isOutOfBounds(init.x, init.y)
-                || isOutOfBounds(init.x + vectorX, init.y + vectorY)
-                || getToken(init.x+vectorX,init.y+vectorY).equals(Jeton.EMPTY)) {
+        //Vérifie si la case à retourner n'est pas vide
+        Jeton tokenToReverse = getToken(init.x + vectorX, init.y + vectorY);
+        if(tokenToReverse == null || tokenToReverse.equals(Jeton.EMPTY)) {
             return;
         }
         
         Position actualPos = new Position(init.x, init.y);
+        tokenToReverse = getToken(actualPos.x,actualPos.y);
         
-        while(! getToken(actualPos.x,actualPos.y).equals(token)){
+        while(tokenToReverse != null && (! tokenToReverse.equals(tokenPlayer))){
             
-            setToken(token,actualPos.x,actualPos.y);
+            setToken(tokenPlayer,actualPos.x,actualPos.y);
             actualPos = new Position(actualPos.x + vectorX ,actualPos.y + vectorY);
-            
-            // Si on sort du tableau : alors on ne fait rien
-            if(isOutOfBounds(actualPos.x, actualPos.y)) {
-                break;
-            }
+            tokenToReverse = getToken(actualPos.x, actualPos.y);
         }
     }
     

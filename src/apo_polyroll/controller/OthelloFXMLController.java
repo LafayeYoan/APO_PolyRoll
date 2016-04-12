@@ -6,15 +6,12 @@ import apo_polyroll.model.IAPlayer;
 import apo_polyroll.model.Plateau;
 import apo_polyroll.model.Plateau.Jeton;
 import static apo_polyroll.model.Plateau.PLATEAU_SIZE;
-import apo_polyroll.model.Player;
 import apo_polyroll.utils.Position;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -42,9 +39,9 @@ public class OthelloFXMLController implements Initializable {
     
     public static final int IMG_SIZE = 69;
 
-    private static Image EMPTY_PICTURE;
-    private static Image WHITE_PICTURE;
-    private static Image BLACK_PICTURE;
+    private static final Image EMPTY_PICTURE;
+    private static final Image WHITE_PICTURE;
+    private static final Image BLACK_PICTURE;
     private static Image PLAYABLE_PICTURE;
     private static AnchorPane rootLayout;  
     
