@@ -77,6 +77,8 @@ public class Plateau {
     
     public void addAndReverse(Position target, Jeton token) {
         
+        othellier[target.x][target.y] = token;
+        
         //reverse in all directions
         reverse(target, 0, -1, token);
         reverse(target, 0, 1, token);
@@ -89,15 +91,35 @@ public class Plateau {
     }
     
     private void reverse(Position init, int vectorX, int vectorY, Jeton token){
-        if(getToken(init.x+vectorX,init.y+vectorY) == Jeton.EMPTY)
-        {
+        
+        //Si la case suivante est vide ou si il y a déjà un pion du joueur dessus
+        if(getToken(init.x+vectorX,init.y+vectorY).equals(Jeton.EMPTY)) {
+            return; //alors on ne fait rien
+        }
+        
+        //Si on sort du tableau : alors on ne fait rien
+        if(othellierOutOfBounds(init.x + vectorX, init.y + vectorY)) {
             return;
         }
-        Position actualPos = init;
-        while(getToken(actualPos.x,actualPos.y) != token){
+        
+        Position actualPos = new Position(init.x, init.y);
+        while(! getToken(actualPos.x,actualPos.y).equals(token)){
             setToken(token,actualPos.x,actualPos.y);
-            actualPos = new Position(actualPos.x +vectorX ,actualPos.y + vectorY);
+            actualPos = new Position(actualPos.x + vectorX ,actualPos.y + vectorY);
         }
+    }
+    
+    /***
+     * Check if the othellier is Out of Bounds for a selected index
+     * @param x 
+     * @param y
+     * @return true if the othellier is out of bounds for the position. False otherwise.
+     */
+    private boolean othellierOutOfBounds(int x, int y) {
+        return x > PLATEAU_SIZE - 1
+                || y > PLATEAU_SIZE - 1
+                || x < 0
+                || y < 0;
     }
     
     /***
