@@ -1,5 +1,6 @@
 package apo_polyroll.model;
 
+import static apo_polyroll.model.Plateau.Jeton.EMPTY;
 import apo_polyroll.utils.Position;
 
 /**
@@ -75,7 +76,14 @@ public class Plateau {
         return getToken(begin.x + index_X, begin.y + index_Y);
     }
     
+    /***
+     * Add a selected token on the selected position. Then reverse all tokens affected.
+     * @param target the position selected
+     * @param token the token to add
+     */
     public void addAndReverse(Position target, Jeton token) {
+        
+        setToken(token, target.x, target.y);
         
         //reverse in all directions
         reverse(target, 0, -1, token);
@@ -88,22 +96,24 @@ public class Plateau {
         reverse(target, -1, 1, token);
     }
     
+    //J'ai trouvé le problème avec la méthode mais je n'arrive pas à le résoudre ! 
+    //demande moi jeudi mon pitit chou <3 
     private void reverse(Position init, int vectorX, int vectorY, Jeton tokenPlayer){
         
-        //Vérifie si la case à retourner n'est pas vide
+        Position actualPos = new Position(init.x + vectorX, init.y + vectorY);
         Jeton tokenToReverse = getToken(init.x + vectorX, init.y + vectorY);
-        if(tokenToReverse == null || tokenToReverse.equals(Jeton.EMPTY)) {
-            return;
-        }
         
-        Position actualPos = new Position(init.x, init.y);
-        tokenToReverse = getToken(actualPos.x,actualPos.y);
-        
-        while(tokenToReverse != null && (! tokenToReverse.equals(tokenPlayer))){
+        while((tokenToReverse != null) && (tokenToReverse != tokenPlayer)){
+            
+            //si la case est vide : il n'y a rien à retourner !
+            if(tokenToReverse == EMPTY) {
+                break;
+            }
             
             setToken(tokenPlayer,actualPos.x,actualPos.y);
             actualPos = new Position(actualPos.x + vectorX ,actualPos.y + vectorY);
             tokenToReverse = getToken(actualPos.x, actualPos.y);
+            
         }
     }
     
