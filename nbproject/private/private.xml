@@ -3,8 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/p1504274/Documents/NetBeansProjects/APO_PolyRoll/src/apo_polyroll/APO_Polyroll.java</file>
-            <file>file:/C:/Users/p1504274/Documents/NetBeansProjects/APO_PolyRoll/src/apo_polyroll/model/Plateau.java</file>
+            <file>file:/C:/Users/lhopital/Documents/NetBeansProjects/APO_PolyRoll/src/apo_polyroll/controller/OthelloFXMLController.java</file>
+            <file>file:/C:/Users/lhopital/Documents/NetBeansProjects/APO_PolyRoll/src/apo_polyroll/model/IAPlayer.java</file>
+            <file>file:/C:/Users/lhopital/Documents/NetBeansProjects/APO_PolyRoll/src/apo_polyroll/model/Plateau.java</file>
+            <file>file:/C:/Users/lhopital/Documents/NetBeansProjects/APO_PolyRoll/src/apo_polyroll/model/Player.java</file>
         </group>
     </open-files>
 </project-private>

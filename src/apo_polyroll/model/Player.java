@@ -43,6 +43,9 @@ public abstract class Player {
      */
     protected Position getSpotIfExist(Plateau othellier, Position initPos, int index_X, int index_Y) {
         
+        // Si on sort du tableau : alors on ne fait rien
+        if(othellier.isOutOfBounds(initPos.x + index_X, initPos.y + index_Y)) return null;
+        
         Plateau.Jeton adjacentToken = othellier.getToken(initPos.x + index_X, initPos.y + index_Y);
         
         if(adjacentToken.equals(token.getReverse())) {
@@ -50,6 +53,11 @@ public abstract class Player {
             while((! adjacentToken.equals(Plateau.Jeton.EMPTY))) {
 
                 initPos = new Position(initPos.x + index_X, initPos.y + index_Y);
+                
+                //Si on sort du tableau avec la position initiale OU une position adjacente on break
+                if(othellier.isOutOfBounds(initPos.x, initPos.y) 
+                        || othellier.isOutOfBounds(initPos.x + index_X, initPos.y + index_Y)) break; 
+                
                 adjacentToken = othellier.getNextToken(initPos, index_X, index_Y);
 
                 if(adjacentToken == null) {
