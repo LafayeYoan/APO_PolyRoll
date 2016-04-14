@@ -121,6 +121,12 @@ public class OthelloFXMLController implements Initializable {
                         physicOthellier.addAndReverse(jeuIA, computer.getToken());
                         playableSpot = player.getPlayableSpots(physicOthellier);
                         updateOthellier();
+                        
+                        //vérifie si le jeu est fini : 
+                        if(physicOthellier.isFull()) {
+                           txtHistory.setText(txtHistory.getText() + "JEU TERMINE ! MERCI D'AVOIR JOUE ! :) \n");
+                           //todo : rajouter des boutons pour rejouer
+                        }
                     }
 
                 });
@@ -229,22 +235,13 @@ public class OthelloFXMLController implements Initializable {
      */
     public void runTheGame() {
         
-        initializeGame();
-        
-    }
-    
-    /***
-     * Setup the othellier and players for the game
-     */
-    private void initializeGame() {
-        
         physicOthellier = new Plateau();
         player = new HumanPlayer();
         computer = new IAPlayer();
         
         playableSpot = player.getPlayableSpots(physicOthellier);
         
-        updateOthellier();
+        updateOthellier();        
     }
     
 }
