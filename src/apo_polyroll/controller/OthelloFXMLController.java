@@ -106,7 +106,7 @@ public class OthelloFXMLController implements Initializable {
                             System.out.println("Le jeton x:"+x+" y:"+y+" a été clické, mais n'est pas jouable");
                             return;
                         }
-                        txtHistory.setText(txtHistory.getText() + "Le jeton x:"+p.x+" y:"+p.y+" a été clické, mise a jour du plateau\n");
+                        txtHistory.setText(txtHistory.getText() + "[Player] Le jeton x:"+p.x+" y:"+p.y+" a été joué.\n");
                         System.out.println("Le jeton x:"+p.x+" y:"+p.y+" a été clické, mise a jour du plateau");
                         
                         //Mise a jour du plateau
@@ -116,6 +116,7 @@ public class OthelloFXMLController implements Initializable {
                         
                         //IA game
                         Position jeuIA = computer.getChoice(physicOthellier);
+                        txtHistory.setText(txtHistory.getText() + "[Ordinateur] Le jeton x:"+jeuIA.x+" y:"+jeuIA.y+" a été joué.\n");
                         System.out.println("choix IA : x : " + jeuIA.x + " y :" + jeuIA.y);
                         physicOthellier.addAndReverse(jeuIA, computer.getToken());
                         playableSpot = player.getPlayableSpots(physicOthellier);
