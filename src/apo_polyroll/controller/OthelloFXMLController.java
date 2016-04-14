@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -102,6 +104,8 @@ public class OthelloFXMLController implements Initializable {
                         
                         //Mise a jour du plateau
                         physicOthellier.addAndReverse(p, player.getToken());
+                        updateOthellier();
+                        
                         
                         //IA game
                         Position jeuIA = computer.getChoice(physicOthellier);

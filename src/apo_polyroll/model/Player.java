@@ -47,7 +47,12 @@ public abstract class Player {
         if(adjacentToken != null && adjacentToken.equals(token.getReverse())) {
         
             while(adjacentToken != null && (! adjacentToken.equals(Plateau.Jeton.EMPTY))) {
-
+                
+                if(adjacentToken.equals(getToken())){
+                    adjacentToken = null;
+                    break;
+                }
+                
                 initPos = new Position(initPos.x + index_X, initPos.y + index_Y);                
                 adjacentToken = othellier.getNextToken(initPos, index_X, index_Y);
             }

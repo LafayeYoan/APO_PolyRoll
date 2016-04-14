@@ -100,13 +100,18 @@ public class Plateau {
     //demande moi jeudi mon pitit chou <3 
     private void reverse(Position init, int vectorX, int vectorY, Jeton tokenPlayer){
         
+        if(!isReversable(init, vectorX, vectorY, tokenPlayer)){
+            return;
+        }
+        
         Position actualPos = new Position(init.x + vectorX, init.y + vectorY);
         Jeton tokenToReverse = getToken(init.x + vectorX, init.y + vectorY);
         
-        while((tokenToReverse != null) && (tokenToReverse != tokenPlayer)){
+        while((tokenToReverse != null)){
             
-            //si la case est vide : il n'y a rien à retourner !
-            if(tokenToReverse == EMPTY) {
+            //si la case est vide ou on a croisé un jeton de la même couleur: 
+            // -> aréter de retourner !
+            if(tokenToReverse == EMPTY || tokenToReverse == tokenPlayer) {
                 break;
             }
             
@@ -115,6 +120,30 @@ public class Plateau {
             tokenToReverse = getToken(actualPos.x, actualPos.y);
             
         }
+    }
+    
+    public boolean isReversable(Position init, int vectorX, int vectorY, Jeton tokenPlayer){
+        Position actualPos = new Position(init.x + vectorX, init.y + vectorY);
+        Jeton tokenToReverse = getToken(init.x + vectorX, init.y + vectorY);
+        
+        boolean reversable = false;
+        
+        while((tokenToReverse != null)){
+            
+            //si la case est vide : il n'y a rien à retourner !
+            if(tokenToReverse == EMPTY) {
+                break;
+            }
+
+            if(tokenToReverse == tokenPlayer) {
+                reversable = true;
+                break;
+            }
+            actualPos = new Position(actualPos.x + vectorX ,actualPos.y + vectorY);
+            tokenToReverse = getToken(actualPos.x, actualPos.y);
+        }
+        
+        return reversable;
     }
     
     /***
