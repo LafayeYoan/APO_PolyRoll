@@ -1,5 +1,6 @@
 package apo_polyroll.model;
 
+import static apo_polyroll.model.Plateau.Jeton.EMPTY;
 import apo_polyroll.utils.Position;
 
 /**
@@ -58,6 +59,9 @@ public class Plateau {
     }
     
     public Jeton getToken(int x, int y) {
+        if(isOutOfBounds(x, y)) {
+            return null;
+        }
         return othellier[x][y];
     }
     
@@ -69,13 +73,17 @@ public class Plateau {
      * @return the token found in this direction
      */
     public Jeton getNextToken(Position begin, int index_X, int index_Y) {
-        if(begin.y + index_Y < 0 || begin.x + index_X < 0) {
-            return null;
-        }
-        return othellier[begin.x + index_X][begin.y + index_Y];
+        return getToken(begin.x + index_X, begin.y + index_Y);
     }
     
+    /***
+     * Add a selected token on the selected position. Then reverse all tokens affected.
+     * @param target the position selected
+     * @param token the token to add
+     */
     public void addAndReverse(Position target, Jeton token) {
+        
+        setToken(token, target.x, target.y);
         
         //reverse in all directions
         reverse(target, 0, -1, token);
@@ -88,16 +96,38 @@ public class Plateau {
         reverse(target, -1, 1, token);
     }
     
-    private void reverse(Position init, int vectorX, int vectorY, Jeton token){
-        if(getToken(init.x+vectorX,init.y+vectorY) == Jeton.EMPTY)
-        {
-            return;
+    //J'ai trouvé le problème avec la méthode mais je n'arrive pas à le résoudre ! 
+    //demande moi jeudi mon pitit chou <3 
+    private void reverse(Position init, int vectorX, int vectorY, Jeton tokenPlayer){
+        
+        Position actualPos = new Position(init.x + vectorX, init.y + vectorY);
+        Jeton tokenToReverse = getToken(init.x + vectorX, init.y + vectorY);
+        
+        while((tokenToReverse != null) && (tokenToReverse != tokenPlayer)){
+            
+            //si la case est vide : il n'y a rien à retourner !
+            if(tokenToReverse == EMPTY) {
+                break;
+            }
+            
+            setToken(tokenPlayer,actualPos.x,actualPos.y);
+            actualPos = new Position(actualPos.x + vectorX ,actualPos.y + vectorY);
+            tokenToReverse = getToken(actualPos.x, actualPos.y);
+            
         }
-        Position actualPos = init;
-        while(getToken(actualPos.x,actualPos.y) != token){
-            setToken(token,actualPos.x,actualPos.y);
-            actualPos = new Position(actualPos.x +vectorX ,actualPos.y + vectorY);
-        }
+    }
+    
+    /***
+     * Check if the othellier is Out of Bounds for a selected index
+     * @param x 
+     * @param y
+     * @return true if the othellier is out of bounds for the position. False otherwise.
+     */
+    public boolean isOutOfBounds(int x, int y) {
+        return x > PLATEAU_SIZE - 1
+                || y > PLATEAU_SIZE - 1
+                || x < 0
+                || y < 0;
     }
     
     /***

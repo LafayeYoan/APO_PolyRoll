@@ -5,15 +5,13 @@ import apo_polyroll.model.HumanPlayer;
 import apo_polyroll.model.IAPlayer;
 import apo_polyroll.model.Plateau;
 import apo_polyroll.model.Plateau.Jeton;
-import apo_polyroll.model.Player;
+import static apo_polyroll.model.Plateau.PLATEAU_SIZE;
 import apo_polyroll.utils.Position;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -41,9 +39,9 @@ public class OthelloFXMLController implements Initializable {
     
     public static final int IMG_SIZE = 69;
 
-    private static Image EMPTY_PICTURE;
-    private static Image WHITE_PICTURE;
-    private static Image BLACK_PICTURE;
+    private static final Image EMPTY_PICTURE;
+    private static final Image WHITE_PICTURE;
+    private static final Image BLACK_PICTURE;
     private static Image PLAYABLE_PICTURE;
     private static AnchorPane rootLayout;  
     
@@ -64,11 +62,11 @@ public class OthelloFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        imgPlateau = new ImageView [Plateau.PLATEAU_SIZE][Plateau.PLATEAU_SIZE];
+        imgPlateau = new ImageView [PLATEAU_SIZE][PLATEAU_SIZE];
         
-        for(int i = 0 ; i< 8; i++){
+        for(int i = 0 ; i < PLATEAU_SIZE; i++){
             
-            for(int j = 0 ; j < 8; j++){
+            for(int j = 0 ; j < PLATEAU_SIZE; j++){
                 
                 ImageView image = new ImageView();
                 image.setFitHeight(IMG_SIZE);
@@ -100,18 +98,17 @@ public class OthelloFXMLController implements Initializable {
                             System.out.println("Le jeton x:"+x+" y:"+y+" a été clické, mais n'est pas jouable");
                             return;
                         }
-                        System.out.println("Le jeton x:"+x+" y:"+y+" a été clické, mise a jour du plateau");
+                        System.out.println("Le jeton x:"+p.x+" y:"+p.y+" a été clické, mise a jour du plateau");
                         
                         //Mise a jour du plateau
-                        physicOthellier.addAndReverse(p,player.getToken());
+                        physicOthellier.addAndReverse(p, player.getToken());
                         
                         //IA game
                         Position jeuIA = computer.getChoice(physicOthellier);
-                        physicOthellier.addAndReverse(jeuIA,computer.getToken());
+                        System.out.println("choix IA : x : " + jeuIA.x + " y :" + jeuIA.y);
+                        physicOthellier.addAndReverse(jeuIA, computer.getToken());
                         playableSpot = player.getPlayableSpots(physicOthellier);
                         updateOthellier();
-                        
-                        
                     }
 
                 });
@@ -155,7 +152,9 @@ public class OthelloFXMLController implements Initializable {
             
             int x = GridPane.getColumnIndex(node);
             int y = GridPane.getRowIndex(node);
+            
             Jeton newToken = physicOthellier.getToken(x,y);
+            
             switch (newToken) {
                 case BLACK:                        
                     ((ImageView)node).setImage(BLACK_PICTURE);
@@ -168,7 +167,9 @@ public class OthelloFXMLController implements Initializable {
                 default: 
                     ((ImageView)node).setImage(EMPTY_PICTURE);
             }
+            
             Position p = new Position (x,y);
+            
             if(playableSpot.contains(p)){
                 ((ImageView)node).setImage(PLAYABLE_PICTURE);
             }

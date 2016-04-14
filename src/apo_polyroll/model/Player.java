@@ -1,7 +1,6 @@
 package apo_polyroll.model;
 
 import apo_polyroll.utils.Position;
-import java.util.ArrayList;
 
 /**
  * Player class 
@@ -45,16 +44,12 @@ public abstract class Player {
         
         Plateau.Jeton adjacentToken = othellier.getToken(initPos.x + index_X, initPos.y + index_Y);
         
-        if(adjacentToken.equals(token.getReverse())) {
+        if(adjacentToken != null && adjacentToken.equals(token.getReverse())) {
         
-            while((! adjacentToken.equals(Plateau.Jeton.EMPTY))) {
+            while(adjacentToken != null && (! adjacentToken.equals(Plateau.Jeton.EMPTY))) {
 
-                initPos = new Position(initPos.x + index_X, initPos.y + index_Y);
+                initPos = new Position(initPos.x + index_X, initPos.y + index_Y);                
                 adjacentToken = othellier.getNextToken(initPos, index_X, index_Y);
-
-                if(adjacentToken == null) {
-                    break;
-                }
             }
             
             if(adjacentToken == null) {
