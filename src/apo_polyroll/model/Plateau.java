@@ -59,6 +59,12 @@ public class Plateau {
         othellier[x][y] = value;
     }
     
+    /***
+     * Check if the position is not out of bounds for the othellier and return the position selected
+     * @param x x index
+     * @param y y index
+     * @return null if the position if out of bounds. The token set up for the position otherwise.
+     */
     public Jeton getToken(int x, int y) {
         if(isOutOfBounds(x, y)) {
             return null;
@@ -97,8 +103,13 @@ public class Plateau {
         reverse(target, -1, 1, token);
     }
     
-    //J'ai trouvé le problème avec la méthode mais je n'arrive pas à le résoudre ! 
-    //demande moi jeudi mon pitit chou <3 
+    /***
+     * Reverse all enemy's token for a precise direction. 
+     * @param init the position where the player played
+     * @param vectorX 
+     * @param vectorY 
+     * @param tokenPlayer the player token
+     */
     private void reverse(Position init, int vectorX, int vectorY, Jeton tokenPlayer){
         
         if(!isReversable(init, vectorX, vectorY, tokenPlayer)){
@@ -123,6 +134,17 @@ public class Plateau {
         }
     }
     
+    /***
+     * Check if a token can be reversed in a precise direction. 
+     * This test is required to avoid reversing if enemy's token is not really 
+     * "surround" by token of the player. 
+     * @param init the initial position
+     * @param vectorX
+     * @param vectorY
+     * @param tokenPlayer the token of the player
+     * @return true if we can reverse all enemy's token for that direction.
+     * false if enemy's token are not really "surround". 
+     */
     public boolean isReversable(Position init, int vectorX, int vectorY, Jeton tokenPlayer){
         Position actualPos = new Position(init.x + vectorX, init.y + vectorY);
         Jeton tokenToReverse = getToken(init.x + vectorX, init.y + vectorY);
@@ -170,7 +192,6 @@ public class Plateau {
         
         int nbReversedToken = 0;
         
-        //count all reversed token in all direction
         nbReversedToken += countReversedToken(pos, 0, -1);
         nbReversedToken += countReversedToken(pos, 0, 1);
         nbReversedToken += countReversedToken(pos, -1, 0);
@@ -183,6 +204,13 @@ public class Plateau {
         return nbReversedToken;
     }
     
+    /***
+     * Evaluate the number of token reversed IF the IAPlayer play at a selected position for a precise direction
+     * @param pos the position selected
+     * @param vectorX 
+     * @param vectorY
+     * @return the number of token reversed
+     */
     private int countReversedToken(Position pos, int vectorX, int vectorY) {
         
         //Si il n'y a rien de reversible dans cette direction : retourne 0
@@ -227,6 +255,11 @@ public class Plateau {
         return true;
     }
     
+    /***
+     * Get Number of token in the othellier for a selected color
+     * @param token the color to evaluate
+     * @return number of token in the othellier for the selected color
+     */
     public int getNumberOfToken(Jeton token){
         int nOfTok = 0;
         for(int i = 0; i < PLATEAU_SIZE; i++) {

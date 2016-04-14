@@ -16,35 +16,8 @@ public class BasicIAPlayer extends IAPlayer {
     public BasicIAPlayer() {
         super();
     }
-    
-    /***
-     * Final position chosen by the IA 
-     * @param othellier the board
-     * @return the position to put a token
-     */
-    public Position getChoice(Plateau othellier){
-        
-        HashMap<Position, Integer> playableSpots = getPlayableSpots(othellier);
-        HashMap.Entry<Position, Integer> finalposition = null;
 
-        for (HashMap.Entry<Position, Integer> entry : playableSpots.entrySet()) {
-            
-            if (finalposition == null || entry.getValue().compareTo(finalposition.getValue()) > 0) {
-                finalposition = entry;
-            }
-        }
-        
-        //NB : si, après la boucle, on a récupérer aucun choix : 
-        // -> le jeu est fini car l'IA ne peut plus jouer !        
-        return finalposition.getKey();
-    }
-
-    /***
-     * Get all playable positions on the othellier for the IA. All position have an associate value. 
-     * The bigger is the value associate, the better is the move for the IA
-     * @param othellier the board
-     * @return an Map of all positions with a value
-     */
+    @Override
     public HashMap<Position, Integer> getPlayableSpots(Plateau othellier) {
         
         HashMap allPositions = new HashMap<Position, Integer>();
