@@ -92,35 +92,43 @@ public class OthelloFXMLController implements Initializable {
 
                     @Override
                     public void handle(MouseEvent event) {
+                        
                         Object sourceObject = event.getSource();
+                        
                         if(!sourceObject.getClass().equals(ImageView.class)){
                             return;
                         }
+                        
                         ImageView spot = (ImageView)sourceObject;
-                        //spot position
+                        
+                        //Tour du joueur
                         int x = GridPane.getColumnIndex(spot);
                         int y = GridPane.getRowIndex(spot);
-                        
                         Position p = new Position(x,y);
+                        
                         if(!playableSpot.contains(p)){
-                            System.out.println("Le jeton x:"+x+" y:"+y+" a été clické, mais n'est pas jouable");
+                            txtHistory.setText(txtHistory.getText() + "[Player] Vous ne pouvez pas jouer ici !\n");
                             return;
                         }
-                        txtHistory.setText(txtHistory.getText() + "[Player] Le jeton x:"+p.x+" y:"+p.y+" a été joué.\n");
-                        System.out.println("Le jeton x:"+p.x+" y:"+p.y+" a été clické, mise a jour du plateau");
                         
-                        //Mise a jour du plateau
+                        txtHistory.setText(txtHistory.getText() + "[Player] Le jeton x:"+p.x+" y:"+p.y+" a été joué.\n");
                         physicOthellier.addAndReverse(p, player.getToken());
                         updateOthellier();
                         
-                        
-                        //IA game
+                        //Tour de l'ordinateur
                         Position jeuIA = computer.getChoice(physicOthellier);
-                        txtHistory.setText(txtHistory.getText() + "[Ordinateur] Le jeton x:"+jeuIA.x+" y:"+jeuIA.y+" a été joué.\n");
-                        System.out.println("choix IA : x : " + jeuIA.x + " y :" + jeuIA.y);
-                        physicOthellier.addAndReverse(jeuIA, computer.getToken());
-                        playableSpot = player.getPlayableSpots(physicOthellier);
-                        updateOthellier();
+                        
+                        //si l'IA ne peut pas jouer : fin du jeu
+                        if(jeuIA == null) {
+                            
+                            txtHistory.setText(txtHistory.getText() + "IA BLOQUEE : FIN DU JEU !");                            
+                        } else {
+                        
+                            txtHistory.setText(txtHistory.getText() + "[Ordinateur] Le jeton x:"+jeuIA.x+" y:"+jeuIA.y+" a été joué.\n");
+                            physicOthellier.addAndReverse(jeuIA, computer.getToken());
+                            playableSpot = player.getPlayableSpots(physicOthellier);
+                            updateOthellier();
+                        }
                         
                         //vérifie si le jeu est fini : 
                         if(physicOthellier.isFull()) {

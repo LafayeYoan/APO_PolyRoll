@@ -32,6 +32,9 @@ public class IAPlayer extends Player {
                 finalposition = entry;
             }
         }
+        
+        //NB : si, après la boucle, on a récupérer aucun choix : 
+        // -> le jeu est fini car l'IA ne peut plus jouer !        
         return finalposition.getKey();
     }
 
