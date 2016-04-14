@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
@@ -8,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="apo_polyroll.controller.OthelloFXMLController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="apo_polyroll.controller.OthelloFXMLController">
    <children>
       <BorderPane layoutX="124.0" layoutY="57.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -33,7 +34,7 @@
             </MenuBar>
          </top>
          <center>
-            <GridPane fx:id="grdPothellier" gridLinesVisible="true" BorderPane.alignment="CENTER">
+            <GridPane fx:id="grdPothellier" gridLinesVisible="true" maxHeight="490.0" maxWidth="490.0" BorderPane.alignment="CENTER">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="70.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="70.0" />
@@ -54,10 +55,28 @@
                 <RowConstraints maxHeight="70.0" minHeight="70.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="70.0" minHeight="70.0" vgrow="SOMETIMES" />
               </rowConstraints>
+               <BorderPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </BorderPane.margin>
             </GridPane>
          </center>
          <right>
-            <Pane fx:id="panelInfo" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+            <Pane fx:id="panelInfo" prefHeight="575.0" prefWidth="357.0" BorderPane.alignment="CENTER">
+               <children>
+                  <TextArea fx:id="txtHistory" editable="false" layoutX="7.0" layoutY="209.0" prefHeight="361.0" prefWidth="344.0" />
+                  <Label alignment="CENTER" layoutX="7.0" layoutY="14.0" prefHeight="60.0" prefWidth="346.0" text="PolyRoll" textAlignment="CENTER">
+                     <font>
+                        <Font name="Century Schoolbook" size="47.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="7.0" layoutY="95.0" text="Vous jouez en :" />
+                  <Label layoutX="6.0" layoutY="129.0" text="Blanc :" />
+                  <Label layoutX="7.0" layoutY="112.0" text="Noir :" />
+                  <Label fx:id="lblHistory" layoutX="7.0" layoutY="183.0" text="Historique des coups" />
+                  <Label fx:id="lblTokenPlayer" layoutX="90.0" layoutY="95.0" text="Label" />
+                  <Label fx:id="lblNbBlack" layoutX="49.0" layoutY="112.0" text="Label" />
+                  <Label fx:id="lblNbWhite" layoutX="49.0" layoutY="129.0" text="Label" />
+               </children></Pane>
          </right>
       </BorderPane>
    </children>

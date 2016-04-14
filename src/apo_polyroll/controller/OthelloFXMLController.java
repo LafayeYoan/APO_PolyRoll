@@ -21,6 +21,8 @@ import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -48,6 +50,10 @@ public class OthelloFXMLController implements Initializable {
     private static AnchorPane rootLayout;  
     
     @FXML GridPane grdPothellier;
+    @FXML Label lblTokenPlayer;
+    @FXML Label lblNbBlack;
+    @FXML Label lblNbWhite;
+    @FXML TextArea txtHistory;
     
     ImageView[][] imgPlateau;
     
@@ -100,6 +106,7 @@ public class OthelloFXMLController implements Initializable {
                             System.out.println("Le jeton x:"+x+" y:"+y+" a été clické, mais n'est pas jouable");
                             return;
                         }
+                        txtHistory.setText(txtHistory.getText() + "Le jeton x:"+p.x+" y:"+p.y+" a été clické, mise a jour du plateau\n");
                         System.out.println("Le jeton x:"+p.x+" y:"+p.y+" a été clické, mise a jour du plateau");
                         
                         //Mise a jour du plateau
