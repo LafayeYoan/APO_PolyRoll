@@ -227,4 +227,16 @@ public class Plateau {
         return true;
     }
     
+    public int getNumberOfToken(Jeton token){
+        int nOfTok = 0;
+        for(int i = 0; i < PLATEAU_SIZE; i++) {
+            for(int j = 0; j < PLATEAU_SIZE; j++) {
+                if(othellier[i][j].equals(token)) {
+                    nOfTok++;
+                }
+            }
+        }
+        return nOfTok;
+    }
+    
 }

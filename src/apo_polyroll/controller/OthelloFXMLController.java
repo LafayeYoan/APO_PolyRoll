@@ -186,6 +186,10 @@ public class OthelloFXMLController implements Initializable {
                 ((ImageView)node).setImage(PLAYABLE_PICTURE);
             }
         }
+        
+        lblTokenPlayer.setText(player.getToken().toString());
+        lblNbBlack.setText(physicOthellier.getNumberOfToken(Jeton.BLACK) + "");
+        lblNbWhite.setText(physicOthellier.getNumberOfToken(Jeton.WHITE) + "");
     }
     
     /***
