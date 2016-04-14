@@ -1,6 +1,7 @@
 package apo_polyroll.controller;
 
 import apo_polyroll.APO_Polyroll;
+import apo_polyroll.model.BasicIAPlayer;
 import apo_polyroll.model.HumanPlayer;
 import apo_polyroll.model.IAPlayer;
 import apo_polyroll.model.Plateau;
@@ -111,7 +112,7 @@ public class OthelloFXMLController implements Initializable {
                             return;
                         }
                         
-                        txtHistory.setText(txtHistory.getText() + "[Player] Le jeton x:"+p.x+" y:"+p.y+" a été joué.\n");
+                        txtHistory.setText(txtHistory.getText() + "[Player] Le jeton x: "+ (p.x + 1) +" y:"+ (p.y + 1) +" a été joué.\n");
                         physicOthellier.addAndReverse(p, player.getToken());
                         updateOthellier();
                         
@@ -124,13 +125,13 @@ public class OthelloFXMLController implements Initializable {
                             txtHistory.setText(txtHistory.getText() + "IA BLOQUEE : FIN DU JEU !");                            
                         } else {
                         
-                            txtHistory.setText(txtHistory.getText() + "[Ordinateur] Le jeton x:"+jeuIA.x+" y:"+jeuIA.y+" a été joué.\n");
+                            txtHistory.setText(txtHistory.getText() + "[Ordinateur] Le jeton x:"+ (jeuIA.x + 1) +" y:"+ (jeuIA.y + 1) +" a été joué.\n");
                             physicOthellier.addAndReverse(jeuIA, computer.getToken());
                             playableSpot = player.getPlayableSpots(physicOthellier);
                             updateOthellier();
                         }
                         
-                        //vérifie si le jeu est fini : 
+                        //vérifie si le jeu est fini
                         if(physicOthellier.isFull()) {
                            txtHistory.setText(txtHistory.getText() + "JEU TERMINE ! MERCI D'AVOIR JOUE ! :) \n");
                            //todo : rajouter des boutons pour rejouer
@@ -245,7 +246,7 @@ public class OthelloFXMLController implements Initializable {
         
         physicOthellier = new Plateau();
         player = new HumanPlayer();
-        computer = new IAPlayer();
+        computer = new BasicIAPlayer();
         
         playableSpot = player.getPlayableSpots(physicOthellier);
         
