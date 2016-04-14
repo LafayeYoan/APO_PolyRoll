@@ -1,6 +1,5 @@
 package apo_polyroll.model;
 
-import apo_polyroll.model.Plateau.Jeton;
 import static apo_polyroll.model.Plateau.PLATEAU_SIZE;
 import apo_polyroll.utils.Position;
 import java.util.ArrayList;

@@ -1,6 +1,7 @@
 package apo_polyroll.model;
 
 import static apo_polyroll.model.Plateau.Jeton.EMPTY;
+import static apo_polyroll.model.Plateau.Jeton.WHITE;
 import apo_polyroll.utils.Position;
 
 /**
@@ -161,12 +162,53 @@ public class Plateau {
     
     /***
     * Count the number of reversed token if the IA play at a selected position
+    * IT'S ONLY WORK FOR IA PLAYER !
     * @param pos the position selected
     * @return a the number of reversed token
     */
     public int getNumberReversedToken(Position pos) {
-        //todo !
-        return 0;
+        
+        int nbReversedToken = 0;
+        
+        //count all reversed token in all direction
+        nbReversedToken += countReversedToken(pos, 0, -1);
+        nbReversedToken += countReversedToken(pos, 0, 1);
+        nbReversedToken += countReversedToken(pos, -1, 0);
+        nbReversedToken += countReversedToken(pos, 1, 0);
+        nbReversedToken += countReversedToken(pos, 1, -1);
+        nbReversedToken += countReversedToken(pos, -1, -1);
+        nbReversedToken += countReversedToken(pos, 1, 1);
+        nbReversedToken += countReversedToken(pos, -1, 1);
+        
+        return nbReversedToken;
+    }
+    
+    private int countReversedToken(Position pos, int vectorX, int vectorY) {
+        
+        //Si il n'y a rien de reversible dans cette direction : retourne 0
+        if(! isReversable(pos, vectorX, vectorY, WHITE)){
+            return 0;
+        }
+        
+        int nbReversedToken = 0;
+        
+        Position actualPos = new Position(pos.x + vectorX, pos.y + vectorY);
+        Jeton tokenToReverse = getToken(pos.x + vectorX, pos.y + vectorY);
+        
+        while((tokenToReverse != null)){
+            
+            //si la case est vide ou on a croisé un jeton de la même couleur: 
+            // -> arète de compter !
+            if(tokenToReverse == EMPTY || tokenToReverse == WHITE) {
+                break;
+            }
+            
+            nbReversedToken++;
+            actualPos = new Position(actualPos.x + vectorX ,actualPos.y + vectorY);
+            tokenToReverse = getToken(actualPos.x, actualPos.y);
+        }
+        
+        return nbReversedToken;
     }
     
     
