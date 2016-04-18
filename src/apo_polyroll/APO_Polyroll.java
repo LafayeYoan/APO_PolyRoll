@@ -1,6 +1,7 @@
 package apo_polyroll;
 
 import apo_polyroll.controller.OthelloFXMLController;
+import apo_polyroll.controller.OthelloMenuFXMLController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -17,7 +18,7 @@ public class APO_Polyroll extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("PolyRoll");
 
-        OthelloFXMLController.initRootLayout(primaryStage);
+        OthelloMenuFXMLController.initRootLayout(primaryStage);
     }
     
      
