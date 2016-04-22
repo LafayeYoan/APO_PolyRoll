@@ -1,6 +1,5 @@
 package apo_polyroll;
 
-import apo_polyroll.controller.OthelloFXMLController;
 import apo_polyroll.controller.OthelloMenuFXMLController;
 import javafx.application.Application;
 import javafx.stage.Stage;
