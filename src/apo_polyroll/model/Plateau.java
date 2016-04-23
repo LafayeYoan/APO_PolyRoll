@@ -1,5 +1,6 @@
 package apo_polyroll.model;
 
+import static apo_polyroll.model.Plateau.Jeton.BLACK;
 import static apo_polyroll.model.Plateau.Jeton.EMPTY;
 import static apo_polyroll.model.Plateau.Jeton.WHITE;
 import apo_polyroll.utils.Position;
@@ -270,6 +271,21 @@ public class Plateau {
             }
         }
         return nOfTok;
+    }
+    
+    /***
+     * Return the color of the current winner
+     * @return WHITE for the IA. BLACK for the Player. EMPTY for equality
+     */
+    Jeton getWinner() {
+        
+        int iAScore = getNumberOfToken(WHITE);
+        int playerScore = getNumberOfToken(BLACK);
+        
+        if(iAScore > playerScore) return WHITE;
+        if(playerScore > iAScore) return BLACK;
+        
+        return EMPTY;
     }
     
 }

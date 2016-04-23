@@ -1,6 +1,7 @@
 
 package apo_polyroll.model;
 
+import static apo_polyroll.model.Plateau.Jeton.BLACK;
 import static apo_polyroll.model.Plateau.Jeton.WHITE;
 import static apo_polyroll.model.Plateau.PLATEAU_SIZE;
 import apo_polyroll.utils.Position;
@@ -197,8 +198,21 @@ public class MinMaxIAPlayer extends IAPlayer {
      * @return 
      */
     private int eval(Plateau othellierSimulated) {
-        //todo !
-        return 0;
+        
+        int iAScore = othellierSimulated.getNumberOfToken(WHITE);
+        int playerScore = othellierSimulated.getNumberOfToken(BLACK);
+        
+        if(othellierSimulated.isFull()) {
+            
+            if(othellierSimulated.getWinner() == WHITE) {
+                //IA win
+                return MAX_VALUE - (iAScore - playerScore);
+            } else {
+                return MIN_VALUE + (playerScore - iAScore);
+            }
+        }
+        
+        return iAScore - playerScore;
     }
     
 
