@@ -59,9 +59,9 @@ public class MinMaxIAPlayer extends IAPlayer {
     private Position findBestPosition(Plateau othellier, int i, int j, int profondeur) {
         
         ArrayList<Position> allPositionsUnclean = new ArrayList<Position>();
+        Plateau othellierSimulated = new Plateau(othellier);
         Position position = new Position(i, j);
         Position best_position = null; 
-        Plateau othellierSimulated = othellier;
         
         allPositionsUnclean.add(getSpotIfExist(othellier, position, 0, -1));
         allPositionsUnclean.add(getSpotIfExist(othellier, position, 0, 1));
@@ -76,6 +76,12 @@ public class MinMaxIAPlayer extends IAPlayer {
             if(pos == null) {
                 //do nothing
             } else {
+                
+                //Première initialisation si le coup à jouer n'est pas très pertinant
+                if(best_position == null) {
+                    best_position = pos;
+                }
+                
                 //Simulation du coup sur un autre plateau !
                 othellierSimulated.addAndReverse(pos, WHITE);
                 currentValue = Min(othellierSimulated, profondeur);
@@ -84,7 +90,7 @@ public class MinMaxIAPlayer extends IAPlayer {
                     best_position = pos;
                 }
                 //suppression du coup précédent.
-                othellierSimulated = othellier;
+                othellierSimulated = new Plateau(othellier);
             }
         }
         
@@ -111,7 +117,7 @@ public class MinMaxIAPlayer extends IAPlayer {
                 if((othellierSimulated.getToken(i, j)).equals(getToken())) {
                     ArrayList<Position> allPositionsUnclean = new ArrayList<Position>();
                     Position position = new Position(i, j);
-                    Plateau othellierSimulated2 = othellierSimulated;
+                    Plateau othellierSimulated2 = new Plateau(othellierSimulated);
                     
                     allPositionsUnclean.add(getSpotIfExist(othellierSimulated, position, 0, -1));
                     allPositionsUnclean.add(getSpotIfExist(othellierSimulated, position, 0, 1));
@@ -131,7 +137,7 @@ public class MinMaxIAPlayer extends IAPlayer {
                             if(currentValue > max_value) {
                                 max_value = currentValue;
                             }
-                            othellierSimulated2 = othellierSimulated;
+                            othellierSimulated2 = new Plateau(othellierSimulated);
                         }
                     }
                     
@@ -162,7 +168,7 @@ public class MinMaxIAPlayer extends IAPlayer {
                     
                     ArrayList<Position> allPositionsUnclean = new ArrayList<Position>();
                     Position position = new Position(i, j);
-                    Plateau othellierSimulated2 = othellierSimulated;
+                    Plateau othellierSimulated2 = new Plateau(othellierSimulated);
                     
                     allPositionsUnclean.add(getSpotIfExist(othellierSimulated, position, 0, -1));
                     allPositionsUnclean.add(getSpotIfExist(othellierSimulated, position, 0, 1));
@@ -182,7 +188,7 @@ public class MinMaxIAPlayer extends IAPlayer {
                             if(currentValue < min_value) {
                                 min_value = currentValue;
                             }
-                            othellierSimulated2 = othellierSimulated;
+                            othellierSimulated2 = new Plateau(othellierSimulated);
                         }
                     }
                     

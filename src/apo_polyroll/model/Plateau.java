@@ -56,6 +56,19 @@ public class Plateau {
         setToken(Jeton.BLACK, 3, 4);
     }
     
+    /***
+     * Construct by copy
+     */
+    public Plateau(Plateau othellierToCopy) {
+        othellier = new Jeton[PLATEAU_SIZE][PLATEAU_SIZE];
+        
+        for(int i = 0; i < PLATEAU_SIZE; i++) {
+            for(int j = 0; j < PLATEAU_SIZE; j++) {
+                othellier[i][j] = othellierToCopy.getToken(i, j);
+            }
+        }
+    }
+    
     public void setToken(Jeton value, int x, int y) {
         othellier[x][y] = value;
     }

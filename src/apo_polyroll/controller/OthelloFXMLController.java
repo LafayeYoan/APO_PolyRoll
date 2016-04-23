@@ -4,6 +4,7 @@ import apo_polyroll.APO_Polyroll;
 import apo_polyroll.model.BasicIAPlayer;
 import apo_polyroll.model.HumanPlayer;
 import apo_polyroll.model.IAPlayer;
+import apo_polyroll.model.MinMaxIAPlayer;
 import apo_polyroll.model.Plateau;
 import apo_polyroll.model.Plateau.Jeton;
 import static apo_polyroll.model.Plateau.PLATEAU_SIZE;
@@ -246,7 +247,9 @@ public class OthelloFXMLController implements Initializable {
         
         physicOthellier = new Plateau();
         player = new HumanPlayer();
-        computer = new BasicIAPlayer();
+        
+        //computer = new BasicIAPlayer();
+        computer = new MinMaxIAPlayer();
         
         playableSpot = player.getPlayableSpots(physicOthellier);
         
