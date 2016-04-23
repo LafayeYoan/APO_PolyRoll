@@ -122,7 +122,7 @@ public class Plateau {
         while((tokenToReverse != null)){
             
             //si la case est vide ou on a croisé un jeton de la même couleur: 
-            // -> aréter de retourner !
+            // -> arrète de retourner !
             if(tokenToReverse == EMPTY || tokenToReverse == tokenPlayer) {
                 break;
             }

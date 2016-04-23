@@ -1,8 +1,10 @@
 
 package apo_polyroll.model;
 
+import static apo_polyroll.model.Plateau.Jeton.WHITE;
 import static apo_polyroll.model.Plateau.PLATEAU_SIZE;
 import apo_polyroll.utils.Position;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -12,10 +14,12 @@ import java.util.HashMap;
  */
 public class MinMaxIAPlayer extends IAPlayer {
     
-    //Nombres de positions différentes pour une case donnée. 
-    public final int NB_FILS = 8;
     public final int MAX_VALUE = 1000;
     public final int MIN_VALUE = -1000;
+    
+    private int max_value;
+    private int min_value;
+    private int currentValue;
     
     public MinMaxIAPlayer() { 
         super();
@@ -32,64 +36,171 @@ public class MinMaxIAPlayer extends IAPlayer {
                 //Si l'IA possède un pion sur cette case 
                 if((othellier.getToken(i, j)).equals(getToken())) {
                     
-                    allPositions.putAll(findAllPossibilities(othellier, i, j)); 
+                    max_value = MIN_VALUE;
+                    currentValue = 0;
+                    
+                    allPositions.put(findBestPosition(othellier, i, j, 6), currentValue); 
                 }
             }
         }
+        
         return allPositions;
     }
     
-    private HashMap<Position, Integer> findAllPossibilities(Plateau othellier, int i, int j) {
+    /***
+     * Min Max function
+     * @param othellier the current othellier
+     * @param i 
+     * @param j
+     * @param profondeur the deapth of the minmax
+     * @return The Best move for a selected position
+     */
+    private Position findBestPosition(Plateau othellier, int i, int j, int profondeur) {
         
-        /*??? Position p1 = othellier.get(target, 0, -1, token);
-        reverse(target, 0, 1, token);
-        reverse(target, -1, 0, token);
-        reverse(target, 1, 0, token);
-        reverse(target, 1, -1, token);
-        reverse(target, -1, -1, token);
-        reverse(target, 1, 1, token);
-        reverse(target, -1, 1, token);*/
-        return null;
+        ArrayList<Position> allPositionsUnclean = new ArrayList<Position>();
+        Position position = new Position(i, j);
+        Position best_position = null; 
+        Plateau othellierSimulated = othellier;
+        
+        allPositionsUnclean.add(getSpotIfExist(othellier, position, 0, -1));
+        allPositionsUnclean.add(getSpotIfExist(othellier, position, 0, 1));
+        allPositionsUnclean.add(getSpotIfExist(othellier, position, -1, 0));
+        allPositionsUnclean.add(getSpotIfExist(othellier, position, 1, 0));
+        allPositionsUnclean.add(getSpotIfExist(othellier, position, 1, -1));
+        allPositionsUnclean.add(getSpotIfExist(othellier, position, -1, -1));
+        allPositionsUnclean.add(getSpotIfExist(othellier, position, 1, 1));
+        allPositionsUnclean.add(getSpotIfExist(othellier, position, -1, 1));
+        
+        for(Position pos : allPositionsUnclean) {
+            if(pos == null) {
+                //do nothing
+            } else {
+                //Simulation du coup sur un autre plateau !
+                othellierSimulated.addAndReverse(pos, WHITE);
+                currentValue = Min(othellierSimulated, profondeur);
+                if(currentValue > max_value) {
+                    max_value = currentValue;
+                    best_position = pos;
+                }
+                //suppression du coup précédent.
+                othellierSimulated = othellier;
+            }
+        }
+        
+        return best_position;
     }
     
-    /*fonction MINIMAX( p) est 
-     maxime = -MAX_VAL
-     pour *) chacune fils = successeur(p) faire
-          val_fils = ValeurMINI(fils)
-          si val_fils > maxime alors
-               maxime = val_fils
-               coup = fils 
-     fin pour
-     retourner coup
-Fin
+    /***
+     * Return the "maximum child value" for a selected a simulation
+     * @param othellierSimulated the othellier simulated
+     * @param profondeur the deapth
+     * @return The max value for the IA in this configuration 
+     */
+    private int Max(Plateau othellierSimulated, int profondeur) {
+        
+        if(profondeur == 0 || othellierSimulated.isFull()) {
+            return eval(othellierSimulated);
+        }
+        
+        max_value = MIN_VALUE;
+        
+        //on refait l'algo pour tous les coups "fils"
+        for(int i = 0; i < PLATEAU_SIZE; i++) {
+            for(int j = 0; j < PLATEAU_SIZE; j++) {
+                if((othellierSimulated.getToken(i, j)).equals(getToken())) {
+                    ArrayList<Position> allPositionsUnclean = new ArrayList<Position>();
+                    Position position = new Position(i, j);
+                    Plateau othellierSimulated2 = othellierSimulated;
+                    
+                    allPositionsUnclean.add(getSpotIfExist(othellierSimulated, position, 0, -1));
+                    allPositionsUnclean.add(getSpotIfExist(othellierSimulated, position, 0, 1));
+                    allPositionsUnclean.add(getSpotIfExist(othellierSimulated, position, -1, 0));
+                    allPositionsUnclean.add(getSpotIfExist(othellierSimulated, position, 1, 0));
+                    allPositionsUnclean.add(getSpotIfExist(othellierSimulated, position, 1, -1));
+                    allPositionsUnclean.add(getSpotIfExist(othellierSimulated, position, -1, -1));
+                    allPositionsUnclean.add(getSpotIfExist(othellierSimulated, position, 1, 1));
+                    allPositionsUnclean.add(getSpotIfExist(othellierSimulated, position, -1, 1));
 
+                    for(Position pos : allPositionsUnclean) {
+                        if(pos == null) {
+                            //do nothing
+                        } else {
+                            othellierSimulated2.addAndReverse(pos, WHITE);
+                            currentValue = Min(othellierSimulated2, profondeur - 1);
+                            if(currentValue > max_value) {
+                                max_value = currentValue;
+                            }
+                            othellierSimulated2 = othellierSimulated;
+                        }
+                    }
+                    
+                }
+            }
+        }
+        return max_value;
+    }
 
-fonction ValeurMINI ( n ) est
-     si  Feuille( n )= vrai alors
-          retourner f(n) 
-     sinon 
-          v_min = MAX_VAL
-          pour *) chacune fils = successeur(p) faire
-               v_fils = ValeurMAX(fils)
-               v_min = min (v_min, v_fils) 
-          fin pour
-     fin si  
-     retourner v_min
-Fin
+    /***
+     * Return the "minimum child value" for a selected a simulation
+     * @param othellierSimulated the othellier simulated
+     * @param profondeur the deapth
+     * @return The min value for the IA in this configuration 
+     */
+    private int Min(Plateau othellierSimulated, int profondeur) {
+        
+        if(profondeur == 0 || othellierSimulated.isFull()) {
+            return eval(othellierSimulated);
+        }
+        
+        min_value = MAX_VALUE;
+        
+        //on refait l'algo pour tous les coups "fils"
+        for(int i = 0; i < PLATEAU_SIZE; i++) {
+            for(int j = 0; j < PLATEAU_SIZE; j++) {
+                if((othellierSimulated.getToken(i, j)).equals(getToken())) {
+                    
+                    ArrayList<Position> allPositionsUnclean = new ArrayList<Position>();
+                    Position position = new Position(i, j);
+                    Plateau othellierSimulated2 = othellierSimulated;
+                    
+                    allPositionsUnclean.add(getSpotIfExist(othellierSimulated, position, 0, -1));
+                    allPositionsUnclean.add(getSpotIfExist(othellierSimulated, position, 0, 1));
+                    allPositionsUnclean.add(getSpotIfExist(othellierSimulated, position, -1, 0));
+                    allPositionsUnclean.add(getSpotIfExist(othellierSimulated, position, 1, 0));
+                    allPositionsUnclean.add(getSpotIfExist(othellierSimulated, position, 1, -1));
+                    allPositionsUnclean.add(getSpotIfExist(othellierSimulated, position, -1, -1));
+                    allPositionsUnclean.add(getSpotIfExist(othellierSimulated, position, 1, 1));
+                    allPositionsUnclean.add(getSpotIfExist(othellierSimulated, position, -1, 1));
 
+                    for(Position pos : allPositionsUnclean) {
+                        if(pos == null) {
+                            //do nothing
+                        } else {
+                            othellierSimulated2.addAndReverse(pos, WHITE);
+                            currentValue = Max(othellierSimulated2, profondeur - 1);
+                            if(currentValue < min_value) {
+                                min_value = currentValue;
+                            }
+                            othellierSimulated2 = othellierSimulated;
+                        }
+                    }
+                    
+                }
+            }
+        }
+        return min_value;
+    }
 
-fonction ValeurMAX ( n ) est
-     si  Feuille( n )= vrai alors
-          retourner f(n) 
-     sinon 
-          v_max = -MAX_VAL
-          pour *) chacune fils = successeur(p) faire
-               v_fils = ValeurMINI(fils)
-               v_max= max(v_max,v_fils)
-          fin pour
-     fin si 
-     retourner v_max
-Fin*/
+    /***
+     * Evaluate if it is a good choice for the IA for the configured othellier.
+     * @param othellierSimulated
+     * @return 
+     */
+    private int eval(Plateau othellierSimulated) {
+        //todo !
+        return 0;
+    }
+    
 
     
            

@@ -34,6 +34,7 @@ public abstract class Player {
     
     /***
      * Get a playable spot if exist in a precise direction. 
+     * A position exist if we can play on it.
      * @param othellier the board
      * @param initPos the initial position for checking
      * @param index_X vector x
