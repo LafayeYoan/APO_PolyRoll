@@ -213,6 +213,7 @@ public class OthelloFXMLController implements Initializable {
         lblTokenPlayer.setText(player.getToken().toString());        
         lblNbBlack.setText(physicOthellier.getNumberOfToken(Jeton.BLACK) + "");
         lblNbWhite.setText(physicOthellier.getNumberOfToken(Jeton.WHITE) + "");
+        txtHistory.setScrollTop(Double.MIN_VALUE);
     }
     
     /***
