@@ -38,7 +38,6 @@ public abstract class IAPlayer extends Player {
         //NB : si, après la boucle, on a récupérer aucun choix : 
         // -> le jeu est fini car l'IA ne peut plus jouer ! 
         if(finalposition == null) {
-            System.err.println("JE SUIS NULL WALA");
             return null;
         }
         
