@@ -6,6 +6,7 @@
 package apo_polyroll.controller;
 
 import apo_polyroll.APO_Polyroll;
+import apo_polyroll.model.Basic2IAPlayer;
 import apo_polyroll.model.BasicIAPlayer;
 import apo_polyroll.model.MinMaxIAPlayer;
 import java.io.IOException;
@@ -32,6 +33,7 @@ public class OthelloMenuFXMLController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         cbLevelIA.getItems().add("Basique");
+        cbLevelIA.getItems().add("Basique Avancée");
         cbLevelIA.getItems().add("MinMax");
     }
     
@@ -59,6 +61,8 @@ public class OthelloMenuFXMLController implements Initializable{
         if(cbLevelIA.getSelectionModel().getSelectedIndex() == 0){
             OthelloFXMLController.initRootLayout(primaryStage, new BasicIAPlayer());
         }else if(cbLevelIA.getSelectionModel().getSelectedIndex() == 1){
+            OthelloFXMLController.initRootLayout(primaryStage, new Basic2IAPlayer());
+        }else if(cbLevelIA.getSelectionModel().getSelectedIndex() == 2){
             OthelloFXMLController.initRootLayout(primaryStage, new MinMaxIAPlayer());
         } 
     }
