@@ -23,7 +23,7 @@ public class MinMaxIAPlayer extends IAPlayer {
     private int currentValue;
     
     public MinMaxIAPlayer() { 
-        super();
+        super("MinMax");
     }
 
     @Override

@@ -148,13 +148,16 @@ public class OthelloFXMLController implements Initializable {
     /**
      * Initializes the root layout.
      */
-    public static void initRootLayout(Stage primaryStage) {
+    public static void initRootLayout(Stage primaryStage, IAPlayer ia) {
         try {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(APO_Polyroll.class.getResource("view/OthelloFXML.fxml"));
             rootLayout = (AnchorPane) loader.load();
-
+            
+            //set the IA
+            computer = ia;
+            
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
@@ -203,7 +206,7 @@ public class OthelloFXMLController implements Initializable {
             }
         }
         
-        lblTokenPlayer.setText(player.getToken().toString());
+        lblTokenPlayer.setText(player.getToken().toString());        
         lblNbBlack.setText(physicOthellier.getNumberOfToken(Jeton.BLACK) + "");
         lblNbWhite.setText(physicOthellier.getNumberOfToken(Jeton.WHITE) + "");
     }
@@ -236,7 +239,7 @@ public class OthelloFXMLController implements Initializable {
     private Plateau physicOthellier;
     private ArrayList <apo_polyroll.utils.Position> playableSpot;
     private HumanPlayer player;
-    private IAPlayer computer;
+    private static IAPlayer computer;
 
     /***
      * Run the Game : 
@@ -247,9 +250,7 @@ public class OthelloFXMLController implements Initializable {
         
         physicOthellier = new Plateau();
         player = new HumanPlayer();
-        
-        //computer = new BasicIAPlayer();
-        computer = new MinMaxIAPlayer();
+
         
         playableSpot = player.getPlayableSpots(physicOthellier);
         

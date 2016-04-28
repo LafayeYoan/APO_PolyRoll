@@ -22,11 +22,6 @@
             <Font name="Century Schoolbook" size="36.0" />
          </font>
       </Button>
-      <MenuButton fx:id="cbLevelIA" alignment="CENTER" layoutX="200.0" layoutY="411.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="520.0" text="Niveau" textAlignment="CENTER" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="411.0">
-        <items>
-          <MenuItem mnemonicParsing="false" text="Action 1" />
-          <MenuItem mnemonicParsing="false" text="Action 2" />
-        </items>
-      </MenuButton>
+      <ComboBox fx:id="cbLevelIA" layoutX="200.0" layoutY="413.0" prefHeight="54.0" prefWidth="527.0" promptText="Niveau" />
    </children>
 </AnchorPane>

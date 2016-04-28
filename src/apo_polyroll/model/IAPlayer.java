@@ -9,9 +9,11 @@ import java.util.HashMap;
  * @author Yoan LAFAYE DE MICHEAUX - Sacha LHOPITAL
  */
 public abstract class IAPlayer extends Player {
+    public String levelName;
 
-    public IAPlayer() {
+    public IAPlayer(String levelName) {
         super("Ordinateur", Plateau.Jeton.WHITE);
+        this.levelName = levelName;
     }
     
     /***
