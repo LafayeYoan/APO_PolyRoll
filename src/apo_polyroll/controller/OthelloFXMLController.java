@@ -105,7 +105,7 @@ public class OthelloFXMLController implements Initializable {
                         
                         //Tour du joueur
                         if(playableSpot == null) {
-                            txtHistory.setText(txtHistory.getText() + "[Player] BLOQUE \n");
+                            txtHistory.setText(txtHistory.getText() + "[Player] BLOQUE, au tour de l'IA \n");
                         } else {
                             
                             int x = GridPane.getColumnIndex(spot);
@@ -127,7 +127,7 @@ public class OthelloFXMLController implements Initializable {
                         Position jeuIA = computer.getChoice(physicOthellier);
                         
                         if(jeuIA == null) {
-                            txtHistory.setText(txtHistory.getText() + "[Ordinateur] BLOQUE ! \n");
+                            txtHistory.setText(txtHistory.getText() + "[Ordinateur] BLOQUE, à votre tour ! \n");
                         } else {
                                                 
                             txtHistory.setText(txtHistory.getText() + "[Ordinateur] Le jeton x:"+ (jeuIA.x + 1) +" y:"+ (jeuIA.y + 1) +" a été joué.\n");

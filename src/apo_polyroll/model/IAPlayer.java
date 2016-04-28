@@ -27,7 +27,10 @@ public abstract class IAPlayer extends Player {
 
         for (HashMap.Entry<Position, Integer> entry : playableSpots.entrySet()) {
             
-            if (finalposition == null || entry.getValue().compareTo(finalposition.getValue()) > 0) {
+            if (finalposition == null 
+                    || finalposition.getKey() == null 
+                    || entry.getValue().compareTo(finalposition.getValue()) > 0) {
+                
                 finalposition = entry;
             }
         }
@@ -35,6 +38,7 @@ public abstract class IAPlayer extends Player {
         //NB : si, après la boucle, on a récupérer aucun choix : 
         // -> le jeu est fini car l'IA ne peut plus jouer ! 
         if(finalposition == null) {
+            System.err.println("JE SUIS NULL WALA");
             return null;
         }
         
