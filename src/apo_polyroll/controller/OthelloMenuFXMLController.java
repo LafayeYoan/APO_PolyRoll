@@ -60,9 +60,10 @@ public class OthelloMenuFXMLController implements Initializable{
             OthelloFXMLController.initRootLayout(primaryStage, new BasicIAPlayer());
         }else if(cbLevelIA.getSelectionModel().getSelectedIndex() == 1){
             OthelloFXMLController.initRootLayout(primaryStage, new MinMaxIAPlayer());
-        }
-        
-        
-        
+        } 
     }
+    
+     public void handleBtnQuitClick(){
+         System.exit(0);
+     }
 }

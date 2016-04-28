@@ -17,7 +17,7 @@
             <Font name="Century Schoolbook" size="36.0" />
          </font>
       </Button>
-      <Button fx:id="btnExit" layoutX="200.0" layoutY="507.0" mnemonicParsing="false" text="Quitter" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0">
+      <Button fx:id="btnExit" layoutX="200.0" layoutY="507.0" mnemonicParsing="false" onAction="#handleBtnQuitClick" text="Quitter" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0">
          <font>
             <Font name="Century Schoolbook" size="36.0" />
          </font>
