@@ -128,13 +128,11 @@ public class OthelloFXMLController implements Initializable {
                         
                         if(jeuIA == null) {
                             txtHistory.setText(txtHistory.getText() + "[Ordinateur] BLOQUE, à votre tour ! \n");
-                        } else {
-                                                
+                        } else {     
                             txtHistory.setText(txtHistory.getText() + "[Ordinateur] Le jeton x:"+ (jeuIA.x + 1) +" y:"+ (jeuIA.y + 1) +" a été joué.\n");
                             physicOthellier.addAndReverse(jeuIA, computer.getToken());
-                            playableSpot = player.getPlayableSpots(physicOthellier);
                         }
-                        
+                        playableSpot = player.getPlayableSpots(physicOthellier);
                         updateOthellier();
                         
                         //vérifie si le jeu est fini

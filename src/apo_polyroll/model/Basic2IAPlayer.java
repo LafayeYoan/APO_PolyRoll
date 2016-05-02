@@ -21,7 +21,7 @@ public class Basic2IAPlayer extends IAPlayer {
     /**
      * Give a value to each position
      */
-    public static int VALUES[][]=
+    public static final int VALUES[][]=
     {{1024,64,256,128,128,256,64,1024},
     {64,64,96,96,128,64,64},
     {256,128,128,64,64,128,128,256},
