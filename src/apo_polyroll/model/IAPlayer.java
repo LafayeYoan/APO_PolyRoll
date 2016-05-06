@@ -9,9 +9,11 @@ import java.util.HashMap;
  * @author Yoan LAFAYE DE MICHEAUX - Sacha LHOPITAL
  */
 public abstract class IAPlayer extends Player {
+    public String levelName;
 
-    public IAPlayer() {
+    public IAPlayer(String levelName) {
         super("Ordinateur", Plateau.Jeton.WHITE);
+        this.levelName = levelName;
     }
     
     /***
@@ -25,13 +27,16 @@ public abstract class IAPlayer extends Player {
 
         for (HashMap.Entry<Position, Integer> entry : playableSpots.entrySet()) {
             
-            if (finalposition == null || entry.getValue().compareTo(finalposition.getValue()) > 0) {
+            if (finalposition == null 
+                    || finalposition.getKey() == null 
+                    || entry.getValue().compareTo(finalposition.getValue()) > 0) {
+                
                 finalposition = entry;
             }
         }
         
         //NB : si, après la boucle, on a récupérer aucun choix : 
-        // -> le jeu est fini car l'IA ne peut plus jouer ! 
+        // -> l'IA est bloquée ! 
         if(finalposition == null) {
             return null;
         }

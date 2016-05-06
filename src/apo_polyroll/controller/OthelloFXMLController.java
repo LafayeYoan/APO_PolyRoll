@@ -104,38 +104,40 @@ public class OthelloFXMLController implements Initializable {
                         ImageView spot = (ImageView)sourceObject;
                         
                         //Tour du joueur
-                        int x = GridPane.getColumnIndex(spot);
-                        int y = GridPane.getRowIndex(spot);
-                        Position p = new Position(x,y);
-                        
-                        if(!playableSpot.contains(p)){
-                            txtHistory.setText(txtHistory.getText() + "[Player] Vous ne pouvez pas jouer ici !\n");
-                            return;
+                        if(playableSpot == null) {
+                            txtHistory.setText(txtHistory.getText() + "[Player] BLOQUE, au tour de l'IA \n");
+                        } else {
+                            
+                            int x = GridPane.getColumnIndex(spot);
+                            int y = GridPane.getRowIndex(spot);
+                            Position p = new Position(x,y);
+
+                            if(!playableSpot.contains(p)){
+                                txtHistory.setText(txtHistory.getText() + "[Player] Vous ne pouvez pas jouer ici !\n");
+                                return;
+                            }
+
+                            txtHistory.setText(txtHistory.getText() + "[Player] Le jeton x: "+ (p.x + 1) +" y:"+ (p.y + 1) +" a été joué.\n");
+                            physicOthellier.addAndReverse(p, player.getToken());
                         }
                         
-                        txtHistory.setText(txtHistory.getText() + "[Player] Le jeton x: "+ (p.x + 1) +" y:"+ (p.y + 1) +" a été joué.\n");
-                        physicOthellier.addAndReverse(p, player.getToken());
                         updateOthellier();
                         
                         //Tour de l'ordinateur
                         Position jeuIA = computer.getChoice(physicOthellier);
                         
-                        //si l'IA ne peut pas jouer : fin du jeu
                         if(jeuIA == null) {
-                            
-                            txtHistory.setText(txtHistory.getText() + "IA BLOQUEE : FIN DU JEU !");                            
-                        } else {
-                        
+                            txtHistory.setText(txtHistory.getText() + "[Ordinateur] BLOQUE, à votre tour ! \n");
+                        } else {     
                             txtHistory.setText(txtHistory.getText() + "[Ordinateur] Le jeton x:"+ (jeuIA.x + 1) +" y:"+ (jeuIA.y + 1) +" a été joué.\n");
                             physicOthellier.addAndReverse(jeuIA, computer.getToken());
-                            playableSpot = player.getPlayableSpots(physicOthellier);
-                            updateOthellier();
                         }
+                        playableSpot = player.getPlayableSpots(physicOthellier);
+                        updateOthellier();
                         
                         //vérifie si le jeu est fini
-                        if(physicOthellier.isFull()) {
+                        if(physicOthellier.isFull() || (jeuIA == null && playableSpot == null)) {
                            txtHistory.setText(txtHistory.getText() + "JEU TERMINE ! MERCI D'AVOIR JOUE ! :) \n");
-                           //todo : rajouter des boutons pour rejouer
                         }
                     }
 
@@ -148,13 +150,16 @@ public class OthelloFXMLController implements Initializable {
     /**
      * Initializes the root layout.
      */
-    public static void initRootLayout(Stage primaryStage) {
+    public static void initRootLayout(Stage primaryStage, IAPlayer ia) {
         try {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(APO_Polyroll.class.getResource("view/OthelloFXML.fxml"));
             rootLayout = (AnchorPane) loader.load();
-
+            
+            //set the IA
+            computer = ia;
+            
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
@@ -203,9 +208,10 @@ public class OthelloFXMLController implements Initializable {
             }
         }
         
-        lblTokenPlayer.setText(player.getToken().toString());
+        lblTokenPlayer.setText(player.getToken().toString());        
         lblNbBlack.setText(physicOthellier.getNumberOfToken(Jeton.BLACK) + "");
         lblNbWhite.setText(physicOthellier.getNumberOfToken(Jeton.WHITE) + "");
+        txtHistory.setScrollTop(Double.MIN_VALUE);
     }
     
     /***
@@ -236,7 +242,7 @@ public class OthelloFXMLController implements Initializable {
     private Plateau physicOthellier;
     private ArrayList <apo_polyroll.utils.Position> playableSpot;
     private HumanPlayer player;
-    private IAPlayer computer;
+    private static IAPlayer computer;
 
     /***
      * Run the Game : 
@@ -247,9 +253,7 @@ public class OthelloFXMLController implements Initializable {
         
         physicOthellier = new Plateau();
         player = new HumanPlayer();
-        
-        //computer = new BasicIAPlayer();
-        computer = new MinMaxIAPlayer();
+
         
         playableSpot = player.getPlayableSpots(physicOthellier);
         

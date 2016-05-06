@@ -14,7 +14,7 @@ import java.util.HashMap;
 public class BasicIAPlayer extends IAPlayer {
     
     public BasicIAPlayer() {
-        super();
+        super("Basique");
     }
 
     @Override

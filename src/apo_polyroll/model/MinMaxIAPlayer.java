@@ -23,7 +23,7 @@ public class MinMaxIAPlayer extends IAPlayer {
     private int currentValue;
     
     public MinMaxIAPlayer() { 
-        super();
+        super("MinMax");
     }
 
     @Override
@@ -40,7 +40,7 @@ public class MinMaxIAPlayer extends IAPlayer {
                     max_value = MIN_VALUE;
                     currentValue = 0;
                     
-                    allPositions.put(findBestPosition(othellier, i, j, 6), currentValue); 
+                    allPositions.put(findBestPosition(othellier, i, j, 5), currentValue); 
                 }
             }
         }
@@ -213,8 +213,13 @@ public class MinMaxIAPlayer extends IAPlayer {
             if(othellierSimulated.getWinner() == WHITE) {
                 //IA win
                 return MAX_VALUE - (iAScore - playerScore);
-            } else {
+                
+            } else if(othellierSimulated.getWinner() == BLACK){
+                //Player win
                 return MIN_VALUE + (playerScore - iAScore);
+            } else {
+                //equality
+                return 0;
             }
         }
         

@@ -6,6 +6,9 @@
 package apo_polyroll.controller;
 
 import apo_polyroll.APO_Polyroll;
+import apo_polyroll.model.Basic2IAPlayer;
+import apo_polyroll.model.BasicIAPlayer;
+import apo_polyroll.model.MinMaxIAPlayer;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -13,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -22,15 +26,15 @@ import javafx.stage.Stage;
  * @author Darkos
  */
 public class OthelloMenuFXMLController implements Initializable{
-    @FXML MenuButton cbLevelIA;
+    @FXML ComboBox cbLevelIA;
     private static AnchorPane rootLayout;
     public static Stage primaryStage;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //TODO
-        
-        
+        cbLevelIA.getItems().add("Basique");
+        cbLevelIA.getItems().add("Basique Avancée");
+        cbLevelIA.getItems().add("MinMax");
     }
     
     /**
@@ -54,6 +58,16 @@ public class OthelloMenuFXMLController implements Initializable{
     }
     
     public void handleBtnPlayClick(){
-        OthelloFXMLController.initRootLayout(primaryStage);
+        if(cbLevelIA.getSelectionModel().getSelectedIndex() == 0){
+            OthelloFXMLController.initRootLayout(primaryStage, new BasicIAPlayer());
+        }else if(cbLevelIA.getSelectionModel().getSelectedIndex() == 1){
+            OthelloFXMLController.initRootLayout(primaryStage, new Basic2IAPlayer());
+        }else if(cbLevelIA.getSelectionModel().getSelectedIndex() == 2){
+            OthelloFXMLController.initRootLayout(primaryStage, new MinMaxIAPlayer());
+        } 
     }
+    
+     public void handleBtnQuitClick(){
+         System.exit(0);
+     }
 }
